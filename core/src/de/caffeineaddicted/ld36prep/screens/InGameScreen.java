@@ -29,7 +29,16 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         texEnemy = game.getAssets().get("enemy.png", Texture.class);
         texTower = game.getAssets().get("tower.png", Texture.class);
 
-        UnitBase unit = new UnitEnemy(1, 10);
+        UnitEnemy unit = new UnitEnemy(game);
+        unit.setHP(1);
+        unit.setSpeed(10);
+        unit.setTexture(texEnemy);
+        unit.setSize(32, 32);
+
+        UnitEnemy unit2 = new UnitEnemy(game);
+        unit2.translateY(-100);
+        unit.setHP(1);
+        unit.setSpeed(3);
         unit.setTexture(texEnemy);
         unit.setSize(32, 32);
     }

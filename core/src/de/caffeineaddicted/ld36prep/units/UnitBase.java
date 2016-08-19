@@ -2,6 +2,7 @@ package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import de.caffeineaddicted.ld36prep.LD36Prep;
 
 import java.util.ArrayList;
 
@@ -13,9 +14,13 @@ abstract public class UnitBase extends Sprite {
         NORTH
     }
 
+    protected LD36Prep game;
+
+
     public static ArrayList<UnitBase> units = new ArrayList<UnitBase>();
 
-    public UnitBase() {
+    public UnitBase(LD36Prep game) {
+        this.game = game;
         units.add(this);
     }
 
@@ -58,13 +63,13 @@ abstract public class UnitBase extends Sprite {
 
         switch (dir) {
             case NORTH:
-                ny -= delta;
+                ny += delta;
                 break;
             case EAST:
                 nx += delta;
                 break;
             case SOUTH:
-                ny += delta;
+                ny -= delta;
                 break;
             case WEST:
                 nx -= delta;
