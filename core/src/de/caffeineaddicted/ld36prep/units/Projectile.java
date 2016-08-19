@@ -14,19 +14,19 @@ public class Projectile extends Sprite {
         activeProjectiles.add(this);
     }
 
-    void setTarget(UnitEnemy target) {
+    public void setTarget(UnitEnemy target) {
         this.target = target;
     }
 
-    void setSpeed(float speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
 
-    void setDamage(float damage) {
+    public void setDamage(float damage) {
         this.damage = damage;
     }
 
-    void tick(float delta) {
+    public void tick(float delta) {
         float dirx = target.getOriginX() - getOriginX();
         float diry = target.getOriginY() - getOriginY();
         float norm = dirx * dirx + diry * diry;

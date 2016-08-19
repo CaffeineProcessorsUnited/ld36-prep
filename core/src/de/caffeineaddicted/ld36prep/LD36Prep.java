@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import de.caffeineaddicted.ld36prep.messages.FinishedLoadingMessage;
 import de.caffeineaddicted.ld36prep.screens.BackgroundScreen;
+import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.screens.LoadingScreen;
 import de.caffeineaddicted.ld36prep.util.Assets;
 import de.caffeineaddicted.sgl.SGLGame;
@@ -38,6 +39,7 @@ public class LD36Prep extends SGLGame {
 	protected void initScreens() {
         rootScreen.loadScreen(new LoadingScreen(this));
         rootScreen.loadScreen(new BackgroundScreen(this));
+        rootScreen.loadScreen(new InGameScreen(this));
 
         rootScreen.showScreen(BackgroundScreen.class, SGLRootScreen.ZINDEX.FAREST);
         rootScreen.showScreen(LoadingScreen.class, SGLRootScreen.ZINDEX.FAR);
@@ -60,6 +62,7 @@ public class LD36Prep extends SGLGame {
             theme.play();
             //message(new ShowMainMenuMessage());
             rootScreen.hideScreen(LoadingScreen.class);
+            rootScreen.showScreen(InGameScreen.class, SGLRootScreen.ZINDEX.NEAREST);
         }
         log(message.getClass().getSimpleName());
 	}
