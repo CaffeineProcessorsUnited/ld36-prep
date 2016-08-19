@@ -50,12 +50,12 @@ public class Projectile extends Entity {
         activeProjectiles.add(this);
         this.type = type;
         setTarget(target);
-        setTexture(game.getAssets().get("enemy.png", Texture.class));
         update();
     }
 
     protected void update() {
-
+        setSize(def().w, def().h);
+        setTexture(game.getAssets().get("projectile.png", Texture.class));
     }
 
     public Definition def() {
@@ -77,7 +77,7 @@ public class Projectile extends Entity {
         float diry = target.getY() - getY();
         float norm = dirx * dirx + diry * diry;
         norm = (float) Math.sqrt(norm);
-        if (Math.abs(norm) > 1e-8) {
+        if (norm > 1e-8) {
             dirx /= norm;
             diry /= norm;
         }

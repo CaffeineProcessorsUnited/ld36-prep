@@ -31,9 +31,9 @@ public class UnitTower extends UnitBase {
     }
 
     public static enum Type {
-        FEGGIT1(new Definition(10, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower.png")),
-        FEGGIT2(new Definition(4, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower.png")),
-        FEGGIT3(new Definition(30, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower.png"));
+        FEGGIT1(new Definition(300, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower.png")),
+        FEGGIT2(new Definition(300, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower.png")),
+        FEGGIT3(new Definition(300, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower.png"));
 
         private ArrayList<Definition> levels = new ArrayList<Definition>();
 
@@ -61,7 +61,6 @@ public class UnitTower extends UnitBase {
 
     protected void update() {
         setSize(def().w, def().h);
-        setSize(def().w, def().h);
         setTexture(game.getAssets().get(def().file, Texture.class));
     }
 
@@ -82,7 +81,7 @@ public class UnitTower extends UnitBase {
             if (unit instanceof UnitEnemy) { //Is Enemy
                 UnitEnemy enemy = (UnitEnemy) unit;
                 Projectile p = new Projectile(game, def().projectile, enemy);
-                p.setPosition(getOriginX(), getOriginY());
+                p.setPosition(getX(), getY());
             }
         }
     }
