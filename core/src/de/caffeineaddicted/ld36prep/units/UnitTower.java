@@ -24,13 +24,13 @@ public class UnitTower extends UnitBase {
                 UnitEnemy enemy = (UnitEnemy) unit;
 
                 Projectile p = new Projectile();
-                p.setPosition(getOriginX(), getOriginY());
+                p.setPosition(getX(), getY());
                 p.setTarget(enemy);
                 p.setSpeed(20);
                 p.setDamage(damage);
 
                 p.setSize(32, 32);
-                p.setTexture(game.getAssets().get("enemy.png", Texture.class));
+                p.setTexture(game.getAssets().get("projectile.png", Texture.class));
             }
         }
     }

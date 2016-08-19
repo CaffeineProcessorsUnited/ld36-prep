@@ -26,9 +26,9 @@ public class Projectile extends Sprite {
         this.damage = damage;
     }
 
-    public void tick(float delta) {
-        float dirx = target.getOriginX() - getOriginX();
-        float diry = target.getOriginY() - getOriginY();
+    public boolean tick(float delta) {
+        float dirx = target.getX() - getX();
+        float diry = target.getY() - getY();
         float norm = dirx * dirx + diry * diry;
         norm = (float) Math.sqrt(norm);
         if (Math.abs(norm) > 1e-8) {
@@ -41,8 +41,10 @@ public class Projectile extends Sprite {
         if (MathUtils.intersectRect(target.getX(), target.getY(), target.getX() + target.getWidth(), target.getY() + target.getHeight(),
                 getX(), getY(), getX() + getWidth(), getY() + getHeight())) {
             target.receiveDamage(damage);
-            activeProjectiles.remove(this);
+            return true;
         }
 
+        System.out.println("" + getX() + "," + getY());
+        return false;
     }
 }

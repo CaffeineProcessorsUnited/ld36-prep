@@ -11,10 +11,10 @@ public class MathUtils {
 
     static public boolean intersectRect(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
         return !(
-                x3 > x1
-                        || x4 < x2
-                        || y3 > y1
-                        || y4 < y2
+                x3 > x2
+                        || x4 < x1
+                        || y3 > y2
+                        || y4 < y1
         );
     }
 
@@ -25,6 +25,6 @@ public class MathUtils {
         float distX = x1 - closestX;
         float distY = y1 - closestY;
         float dist = distX * distX + distY * distY;
-        return dist < r * r;
+        return dist < (r * r);
     }
 }
