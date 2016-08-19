@@ -81,7 +81,7 @@ abstract public class UnitBase extends Entity {
             ny = Gdx.graphics.getHeight() - getHeight();
         }
 
-        if (GetUnitsInRect(nx, ny, nx + getWidth(), ny + getHeight()).size() > 0)
+        if (GetUnitsInRect(nx, ny, nx + getWidth(), ny + getHeight()).size() > 1)
             return false;
         setPosition(nx, ny);
         return true;

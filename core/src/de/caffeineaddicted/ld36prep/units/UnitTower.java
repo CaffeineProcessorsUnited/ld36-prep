@@ -81,7 +81,6 @@ public class UnitTower extends UnitBase {
         for (UnitBase unit : unitsInRange) {
             if (unit instanceof UnitEnemy) { //Is Enemy
                 UnitEnemy enemy = (UnitEnemy) unit;
-
                 Projectile p = new Projectile(game, def().projectile, enemy);
                 p.setPosition(getOriginX(), getOriginY());
             }

@@ -66,9 +66,15 @@ public class Projectile extends Entity {
         this.target = target;
     }
 
-    public void tick(float delta) {
-        float dirx = target.getOriginX() - getOriginX();
-        float diry = target.getOriginY() - getOriginY();
+    /**
+     * @param delta time delta in seconds
+     * @return bool wheather to be destroyed
+     */
+    public boolean tick(float delta) {
+        if (!target.alive())
+            return true;
+        float dirx = target.getX() - getX();
+        float diry = target.getY() - getY();
         float norm = dirx * dirx + diry * diry;
         norm = (float) Math.sqrt(norm);
         if (Math.abs(norm) > 1e-8) {
@@ -81,8 +87,10 @@ public class Projectile extends Entity {
         if (MathUtils.intersectRect(target.getX(), target.getY(), target.getX() + target.getWidth(), target.getY() + target.getHeight(),
                 getX(), getY(), getX() + getWidth(), getY() + getHeight())) {
             target.receiveDamage(def().damage);
-            activeProjectiles.remove(this);
+            return true;
         }
 
+        System.out.println("" + getX() + "," + getY());
+        return false;
     }
 }
