@@ -26,17 +26,17 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
     public void create() {
         game.debug("Creating InGameScreen");
-        texEnemy = new Texture("enemy.png");
-        texTower = new Texture("tower.png");
+        texEnemy = game.getAssets().get("enemy.png", Texture.class);
+        texTower = game.getAssets().get("tower.png", Texture.class);
 
         UnitBase unit = new UnitEnemy(1, 10);
-        unit.setSize(32, 32);
         unit.setTexture(texEnemy);
+        unit.setSize(32, 32);
     }
 
     public void render(float delta) {
         for (UnitBase unit : UnitBase.units) {
-            game.warning("" + unit.getX() + "," + unit.getY());
+            game.debug("" + unit.getX() + "," + unit.getY());
             unit.tick(delta);
         }
         for (Projectile projectile : Projectile.activeProjectiles) {
@@ -47,9 +47,11 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         batch.begin();
 
         for (UnitBase unit : UnitBase.units) {
+            game.debug(unit.getClass().getSimpleName());
             unit.draw(batch);
         }
         for (Projectile projectile : Projectile.activeProjectiles) {
+            game.debug(projectile.getClass().getSimpleName());
             projectile.draw(batch);
         }
 

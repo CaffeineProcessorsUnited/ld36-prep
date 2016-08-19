@@ -29,6 +29,7 @@ public class LD36Prep extends SGLGame {
 
     @Override
     public void create() {
+        Gdx.app.setLogLevel(Gdx.app.LOG_DEBUG);
         batch = new SpriteBatch();
         shape = new ShapeRenderer();
         assets = new Assets();

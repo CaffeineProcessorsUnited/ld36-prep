@@ -19,5 +19,7 @@ public class Assets extends AssetManager {
     public void load() {
         load("theme.ogg", Music.class);
         load("uiskin.json", Skin.class);
+        load("enemy.png", Texture.class);
+        load("tower.png", Texture.class);
     }
 }
