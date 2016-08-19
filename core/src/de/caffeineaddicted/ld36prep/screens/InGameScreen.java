@@ -49,6 +49,8 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         }
 
         SpriteBatch batch = game.getBatch();
+        batch.enableBlending();
+        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_DST_ALPHA);
         batch.begin();
 
         for (UnitBase unit : UnitBase.units) {
@@ -59,5 +61,6 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         }
 
         batch.end();
+        batch.disableBlending();
     }
 }
