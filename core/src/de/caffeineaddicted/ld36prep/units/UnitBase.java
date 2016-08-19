@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.ArrayList;
-import java.util.List;
 
 abstract public class UnitBase extends Sprite {
     protected enum DIRECTION {
@@ -26,38 +25,11 @@ abstract public class UnitBase extends Sprite {
 
     abstract public void tick(float delta);
 
-    protected float clamp(float val, float min, float max) {
-        if (val < min)
-            return min;
-        else if (val > max)
-            return max;
-        return val;
-    }
-
-    protected boolean intersectRect(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
-        return !(
-                x3 > x1
-                        || x4 < x2
-                        || y3 > y1
-                        || y4 < y2
-        );
-    }
-
-    protected boolean intersectCircleRect(float x1, float y1, float r, float x2, float y2, float x3, float y3) {
-        float closestX = clamp(x1, x2, x3);
-        float closestY = clamp(y1, y2, y3);
-
-        float distX = x1 - closestX;
-        float distY = y1 - closestY;
-        float dist = distX * distX + distY * distY;
-        return dist < r * r;
-    }
-
-    protected ArrayList<UnitBase> getUnitsAt(float x1, float y1, float x2, float y2) {
+    protected ArrayList<UnitBase> GetUnitsInRect(float x1, float y1, float x2, float y2) {
         ArrayList<UnitBase> list = new ArrayList<UnitBase>();
 
         for (UnitBase unit : units) {
-            if (intersectRect(unit.getX(), unit.getY(),
+            if (MathUtils.intersectRect(unit.getX(), unit.getY(),
                     unit.getX() + unit.getHeight(), unit.getY() + unit.getHeight(),
                     x1, y1, x2, y2)) {
                 list.add(unit);
@@ -69,7 +41,7 @@ abstract public class UnitBase extends Sprite {
     protected ArrayList<UnitBase> getUnitsInRange(float x, float y, float range) {
         ArrayList<UnitBase> list = new ArrayList<UnitBase>();
         for (UnitBase unit : units) {
-            if (intersectCircleRect(x, y, range,
+            if (MathUtils.intersectCircleRect(x, y, range,
                     unit.getX(), unit.getY(),
                     unit.getX() + unit.getHeight(), unit.getY() + unit.getHeight())) {
                 list.add(unit);
@@ -98,8 +70,8 @@ abstract public class UnitBase extends Sprite {
                 nx -= delta;
                 break;
         }
-        nx = clamp(nx, 0, Gdx.graphics.getWidth());
-        ny = clamp(ny, 0, Gdx.graphics.getHeight());
+        nx = MathUtils.clamp(nx, 0, Gdx.graphics.getWidth());
+        ny = MathUtils.clamp(ny, 0, Gdx.graphics.getHeight());
         if (nx + getWidth() > Gdx.graphics.getWidth()) {
             nx = Gdx.graphics.getWidth() - getWidth();
         }
@@ -107,7 +79,7 @@ abstract public class UnitBase extends Sprite {
             ny = Gdx.graphics.getHeight() - getHeight();
         }
 
-        if (getUnitsAt(nx, ny, nx + getWidth(), ny + getHeight()).size() > 0)
+        if (GetUnitsInRect(nx, ny, nx + getWidth(), ny + getHeight()).size() > 0)
             return false;
         setPosition(nx, ny);
         return true;

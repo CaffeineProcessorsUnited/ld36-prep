@@ -7,8 +7,10 @@ public class UnitTower extends UnitBase {
     public float range;
     public float damage;
 
-    public UnitTower() {
+    public UnitTower(float range, float damage) {
         super();
+        this.range = range;
+        this.damage = damage;
     }
 
     @Override
@@ -17,9 +19,12 @@ public class UnitTower extends UnitBase {
         for (UnitBase unit : unitsInRange) {
             if (unit instanceof UnitEnemy) { //Is Enemy
                 UnitEnemy enemy = (UnitEnemy) unit;
-                enemy.hp -= damage;
-                if (enemy.hp < 0) //Is Dead => Remove
-                    enemy.destroy();
+
+                Projectile p = new Projectile();
+                p.setPosition(getOriginX(), getOriginY());
+                p.setTarget(enemy);
+                p.setSpeed(1);
+                p.setDamage(damage);
             }
         }
     }
