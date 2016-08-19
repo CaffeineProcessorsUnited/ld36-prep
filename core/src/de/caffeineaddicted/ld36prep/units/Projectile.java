@@ -26,7 +26,13 @@ public class Projectile extends Sprite {
         this.damage = damage;
     }
 
+    /**
+     * @param delta time delta in seconds
+     * @return bool wheather to be destroyed
+     */
     public boolean tick(float delta) {
+        if (!target.alive())
+            return true;
         float dirx = target.getX() - getX();
         float diry = target.getY() - getY();
         float norm = dirx * dirx + diry * diry;
