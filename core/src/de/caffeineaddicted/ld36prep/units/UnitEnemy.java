@@ -5,40 +5,46 @@ import com.badlogic.gdx.graphics.Texture;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 
 public class UnitEnemy extends UnitBase {
+
+    public final UnitEnemy.Type type;
     private float hp;
-    private float speed;
 
     public static enum Type {
-        FEGGIT1(32, 32, 10, 1, 5, "enemy.png"),
-        FEGGIT2(32, 32, 20, 1, 2.5f, "enemy.png"),
-        FEGGIT3(32, 32, 100, 0.5f, 1, "enemy.png");
+        FEGGIT1(10, 5, 32, 32, "enemy.png"),
+        FEGGIT2(20, 2.5f, 32, 32, "enemy.png"),
+        FEGGIT3(100, 1, 32, 32, "enemy.png");
 
+        public final float hp;
+        public final float speed;
         public final int w;
         public final int h;
-        public final float hp;
-        public final float damage;
-        public final float speed;
         public final String file;
 
-        Type(int w, int h, float hp, float damage, float speed, String file) {
+        Type(float hp, float speed, int w, int h, String file) {
+            this.hp = hp;
+            this.speed = speed;
             this.w = w;
             this.h = h;
-            this.hp = hp;
-            this.damage = damage;
-            this.speed = speed;
             this.file = file;
         }
-    };
+    }
 
     public UnitEnemy(LD36Prep game, UnitEnemy.Type type) {
         super(game);
+        this.type = type;
         setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
-        setSpeed(type.speed);
-        setHP(type.hp);
+        setHP(def().hp);
+        update();
+    }
 
-        setSize(type.w, type.h);
-        setSize(type.w, type.h);
-        setTexture(game.getAssets().get(type.file, Texture.class));
+    protected void update() {
+        setTexture(game.getAssets().get(def().file, Texture.class));
+        setSize(def().w, def().h);
+        setSize(def().w, def().h);
+    }
+
+    public Type def() {
+        return type;
     }
 
     @Override
@@ -46,7 +52,7 @@ public class UnitEnemy extends UnitBase {
         if (hp < 0) //Dead
             return;
 
-        delta *= speed;
+        delta *= def().speed;
 
         for (DIRECTION dir : DIRECTION.values()) {
             if (moveDirection(dir, delta))
@@ -66,9 +72,5 @@ public class UnitEnemy extends UnitBase {
 
     public void setHP(float hp) {
         this.hp = hp;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
     }
 }

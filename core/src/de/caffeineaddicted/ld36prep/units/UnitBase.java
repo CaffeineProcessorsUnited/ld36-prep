@@ -6,7 +6,7 @@ import de.caffeineaddicted.ld36prep.LD36Prep;
 
 import java.util.ArrayList;
 
-abstract public class UnitBase extends Sprite {
+abstract public class UnitBase extends Entity {
     protected enum DIRECTION {
         SOUTH,
         EAST,
@@ -14,13 +14,10 @@ abstract public class UnitBase extends Sprite {
         NORTH
     }
 
-    protected LD36Prep game;
-
-
     public static ArrayList<UnitBase> units = new ArrayList<UnitBase>();
 
     public UnitBase(LD36Prep game) {
-        this.game = game;
+        super(game);
         units.add(this);
     }
 
