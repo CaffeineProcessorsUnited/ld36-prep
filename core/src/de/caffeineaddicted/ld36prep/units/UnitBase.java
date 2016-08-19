@@ -1,0 +1,115 @@
+package de.caffeineaddicted.ld36prep.units;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+import java.util.ArrayList;
+import java.util.List;
+
+abstract public class UnitBase extends Sprite {
+    protected enum DIRECTION {
+        SOUTH,
+        EAST,
+        WEST,
+        NORTH
+    }
+
+    public static ArrayList<UnitBase> units = new ArrayList<UnitBase>();
+
+    public UnitBase() {
+        units.add(this);
+    }
+
+    public void destroy() {
+        units.remove(this);
+    }
+
+    abstract public void tick(float delta);
+
+    protected float clamp(float val, float min, float max) {
+        if (val < min)
+            return min;
+        else if (val > max)
+            return max;
+        return val;
+    }
+
+    protected boolean intersectRect(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+        return !(
+                x3 > x1
+                        || x4 < x2
+                        || y3 > y1
+                        || y4 < y2
+        );
+    }
+
+    protected boolean intersectCircleRect(float x1, float y1, float r, float x2, float y2, float x3, float y3) {
+        float closestX = clamp(x1, x2, x3);
+        float closestY = clamp(y1, y2, y3);
+
+        float distX = x1 - closestX;
+        float distY = y1 - closestY;
+        float dist = distX * distX + distY * distY;
+        return dist < r * r;
+    }
+
+    protected ArrayList<UnitBase> getUnitsAt(float x1, float y1, float x2, float y2) {
+        ArrayList<UnitBase> list = new ArrayList<UnitBase>();
+
+        for (UnitBase unit : units) {
+            if (intersectRect(unit.getX(), unit.getY(),
+                    unit.getX() + unit.getHeight(), unit.getY() + unit.getHeight(),
+                    x1, y1, x2, y2)) {
+                list.add(unit);
+            }
+        }
+        return list;
+    }
+
+    protected ArrayList<UnitBase> getUnitsInRange(float x, float y, float range) {
+        ArrayList<UnitBase> list = new ArrayList<UnitBase>();
+        for (UnitBase unit : units) {
+            if (intersectCircleRect(x, y, range,
+                    unit.getX(), unit.getY(),
+                    unit.getX() + unit.getHeight(), unit.getY() + unit.getHeight())) {
+                list.add(unit);
+            }
+        }
+        return list;
+    }
+
+    protected boolean moveDirection(DIRECTION dir, float delta) {
+        float x = getX();
+        float y = getY();
+        float nx = x;
+        float ny = y;
+
+        switch (dir) {
+            case NORTH:
+                ny -= delta;
+                break;
+            case EAST:
+                nx += delta;
+                break;
+            case SOUTH:
+                ny += delta;
+                break;
+            case WEST:
+                nx -= delta;
+                break;
+        }
+        nx = clamp(nx, 0, Gdx.graphics.getWidth());
+        ny = clamp(ny, 0, Gdx.graphics.getHeight());
+        if (nx + getWidth() > Gdx.graphics.getWidth()) {
+            nx = Gdx.graphics.getWidth() - getWidth();
+        }
+        if (ny + getHeight() > Gdx.graphics.getHeight()) {
+            ny = Gdx.graphics.getHeight() - getHeight();
+        }
+
+        if (getUnitsAt(nx, ny, nx + getWidth(), ny + getHeight()).size() > 0)
+            return false;
+        setPosition(nx, ny);
+        return true;
+    }
+}
