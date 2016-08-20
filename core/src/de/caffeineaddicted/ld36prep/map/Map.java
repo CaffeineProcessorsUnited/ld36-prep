@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.units.Entity;
+import de.caffeineaddicted.ld36prep.units.UnitBase;
+import de.caffeineaddicted.ld36prep.units.UnitTower;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 
 /**

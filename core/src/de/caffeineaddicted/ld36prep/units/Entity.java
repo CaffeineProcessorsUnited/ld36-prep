@@ -44,7 +44,7 @@ public abstract class Entity {
         this.drawables = new HashMap<String, Drawable>();
     }
 
-    protected void update() {
+    public void update() {
     }
 
     public float unitToPixel(float units) {

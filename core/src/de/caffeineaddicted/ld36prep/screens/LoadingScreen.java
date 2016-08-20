@@ -48,7 +48,7 @@ public class LoadingScreen extends SGLScreen<LD36Prep> {
         Texture texBackground = game.getAssets().get("background.png", Texture.class);
         texBackground.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         background = new Sprite(texBackground);
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        background.setSize(game.getCamera().viewportWidth, game.getCamera().viewportHeight);
 
         Texture texCPU = game.getAssets().get("cpu.png", Texture.class);
         cpu = new Sprite(texCPU);

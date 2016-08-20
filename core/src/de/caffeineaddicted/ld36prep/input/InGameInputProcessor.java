@@ -1,33 +1,28 @@
 package de.caffeineaddicted.ld36prep.input;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import de.caffeineaddicted.ld36prep.LD36Prep;
+import com.badlogic.gdx.Input;
+import de.caffeineaddicted.ld36prep.messages.TogglePauseGameMessage;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
+import de.caffeineaddicted.sgl.input.SGLInputProcessor;
 
 /**
  * Created by niels on 20.08.16.
  */
-public class InGameInputProcessor implements InputProcessor{
-    private LD36Prep game;
+public class InGameInputProcessor extends SGLInputProcessor {
     private InGameScreen screen;
-    public InGameInputProcessor(LD36Prep game, InGameScreen screen){
-        this.game = game;
+
+    public InGameInputProcessor(InGameScreen screen){
         this.screen = screen;
     }
 
     @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
     public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
+        switch (keycode) {
+            case Input.Keys.SPACE:
+                screen.game.message(new TogglePauseGameMessage());
+                break;
+        }
         return false;
     }
 
@@ -58,11 +53,6 @@ public class InGameInputProcessor implements InputProcessor{
         screen.touchMoved(screenX, screenY);
         screen.mouseMoved(screenX, screenY);
         return true;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
     }
 
 

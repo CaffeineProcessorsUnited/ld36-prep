@@ -55,7 +55,7 @@ public class Projectile extends Entity {
         update();
     }
 
-    protected void update() {
+    public void update() {
         super.update();
         setSize(def().w, def().h);
         clearDrawables();

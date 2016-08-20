@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import de.caffeineaddicted.ld36prep.LD36Prep;
+import de.caffeineaddicted.ld36prep.input.InGameInputProcessor;
 import de.caffeineaddicted.ld36prep.map.Map;
 import de.caffeineaddicted.ld36prep.units.*;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
@@ -38,7 +39,8 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
     public void create() {
         game.debug("Creating InGameScreen");
-        map = new Map(this, 20, 20, game.getCamera().viewportWidth, game.getCamera().viewportHeight);
+        game.getScreenInput().addProcessor(this, new InGameInputProcessor(this));
+        map = new Map(this, 40, 20, game.getCamera().viewportWidth, game.getCamera().viewportHeight);
 
         UnitEnemy unit1 = new UnitEnemy(this, UnitEnemy.Type.FEGGIT1);
 
@@ -55,24 +57,26 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     }
 
     public void render(float delta) {
-        waitTimer += delta;
-        if (waitTimer > sleepTimer) {
-            waitTimer -= sleepTimer;
-            UnitEnemy enemy = new UnitEnemy(this, UnitEnemy.Type.values()[MathUtils.random(0, UnitEnemy.Type.values().length - 1)]);
-            enemy.translate(map.gridToPos(MathUtils.random(-10, 10), 8));
+        if (!isPaused()) {
+            waitTimer += delta;
+            if (waitTimer > sleepTimer) {
+                waitTimer -= sleepTimer;
+                UnitEnemy enemy = new UnitEnemy(this, UnitEnemy.Type.values()[MathUtils.random(0, UnitEnemy.Type.values().length - 1)]);
+                enemy.translate(map.gridToPos(MathUtils.random(-10, 10), 8));
 
-            sleepTimer = Math.max(0.8f, sleepTimer * 0.995f);
-        }
+                sleepTimer = Math.max(0.8f, sleepTimer * 0.995f);
+            }
 
-        for (UnitBase unit : UnitBase.units) {
-            unit.tick(delta);
-        }
+            for (UnitBase unit : UnitBase.units) {
+                unit.tick(delta);
+            }
 
-        Iterator<Projectile> projectileIterator = Projectile.activeProjectiles.iterator();
-        while (projectileIterator.hasNext()) {
-            Projectile projectile = projectileIterator.next();
-            if (projectile.tick(delta)) {
-                projectileIterator.remove();
+            Iterator<Projectile> projectileIterator = Projectile.activeProjectiles.iterator();
+            while (projectileIterator.hasNext()) {
+                Projectile projectile = projectileIterator.next();
+                if (projectile.tick(delta)) {
+                    projectileIterator.remove();
+                }
             }
         }
         Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -150,6 +154,7 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         Vector2 posnext = map.gridToPos(pos.x + 1, pos.y + 1);
         if (!UnitBase.GetUnitsInRect(selectedTowerX + 1, selectedTowerY + 1, posnext.x - 1, posnext.y - 1).isEmpty())
             return;
+
         int selectedPiece = towerSelectionHUD.getSelectedSlice();
         if (selectedPiece >= 0) {
             UnitTower tower = new UnitTower(this, UnitTower.Type.values()[selectedPiece]);
@@ -176,4 +181,10 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     public Map getMap() {
         return map;
     }
+
+    @Override
+    public void resize (int width, int height) {
+        map.resize(game.getCamera().viewportWidth, game.getCamera().viewportHeight);
+    }
+
 }

@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = LD36Prep.getConfig().get(ApplicationConfiguration.Attribute.WIDTH);
         config.height = LD36Prep.getConfig().get(ApplicationConfiguration.Attribute.HEIGHT);
+        config.resizable = false;
 		new LwjglApplication(new LD36Prep(), config);
 	}
 }

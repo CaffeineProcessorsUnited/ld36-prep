@@ -40,6 +40,10 @@ public class ApplicationConfiguration {
         return (T) attributes.get(attribute);
     }
 
+    public <T> T get(Attribute attribute, Class<T> c) {
+        return (T) attributes.get(attribute);
+    }
+
     public <T> ApplicationConfiguration set(Attribute attribute, T value) {
         attributes.put(attribute, value);
         return this;

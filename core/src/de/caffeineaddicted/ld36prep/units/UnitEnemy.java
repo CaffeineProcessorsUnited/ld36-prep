@@ -41,7 +41,7 @@ public class UnitEnemy extends UnitBase {
         update();
     }
 
-    protected void update() {
+    public void update() {
         clearDrawables();
         addTexture(def().file);
 
