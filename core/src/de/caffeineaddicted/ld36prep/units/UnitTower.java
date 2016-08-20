@@ -1,9 +1,8 @@
 package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import de.caffeineaddicted.ld36prep.LD36Prep;
+import de.caffeineaddicted.ld36prep.screens.InGameScreen;
+import de.caffeineaddicted.ld36prep.util.MathUtils;
 
 import java.util.ArrayList;
 
@@ -56,8 +55,8 @@ public class UnitTower extends UnitBase {
         }
     }
 
-    public UnitTower(LD36Prep game, UnitTower.Type type) {
-        super(game);
+    public UnitTower(InGameScreen screen, UnitTower.Type type) {
+        super(screen);
         this.type = type;
         this.level = 0;
         this.lastShot = def().reload;
@@ -68,7 +67,7 @@ public class UnitTower extends UnitBase {
     protected void update() {
         super.update();
         setSize(def().w, def().h);
-        setTexture(game.getAssets().get(def().file, Texture.class));
+        setTexture(screen.game.getAssets().get(def().file, Texture.class));
     }
 
     public Definition def() {
@@ -94,9 +93,9 @@ public class UnitTower extends UnitBase {
             UnitEnemy enemy = (UnitEnemy) unitsInRange.get(targetIndex);
             double angleToTarget = MathUtils.angleToPoint(getX(), getY(), enemy.getX(), enemy.getY());
             setRotation(-(float) angleToTarget);
-            game.debug("in range: " + enemy.type.name());
-            Projectile p = new Projectile(game, def().projectile, enemy);
-            game.debug(getX() + "," + getY() + "," + getWidth() + "," + getHeight() + "," + getCenterPoint().x + "," + getCenterPoint().y);
+            screen.game.debug("in range: " + enemy.type.name());
+            Projectile p = new Projectile(screen, def().projectile, enemy);
+            screen.game.debug(getX() + "," + getY() + "," + getWidth() + "," + getHeight() + "," + getCenterPoint().x + "," + getCenterPoint().y);
             p.setCenterPosition(getCenterPoint().x, getCenterPoint().y);
             lastShot = 0;
         }

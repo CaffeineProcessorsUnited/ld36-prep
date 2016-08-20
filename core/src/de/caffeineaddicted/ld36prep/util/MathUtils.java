@@ -1,4 +1,9 @@
-package de.caffeineaddicted.ld36prep.units;
+package de.caffeineaddicted.ld36prep.util;
+
+import com.badlogic.gdx.math.Vector2;
+import de.caffeineaddicted.ld36prep.units.Entity;
+
+import java.util.Random;
 
 public class MathUtils {
     public static float clamp(float val, float min, float max) {
@@ -33,11 +38,19 @@ public class MathUtils {
         return (angle < 0) ? angle + 360 : angle;
     }
 
+    public static float distanceP2P(Vector2 p1, Vector2 p2) {
+        return distanceP2P(p1.x, p1.y, p2.x, p2.y);
+    }
+
     public static float distanceP2P(float x1, float y1, float x2, float y2) {
         return (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
     public static float distanceP2P(Entity e1, Entity e2) {
         return MathUtils.distanceP2P(e1.getCenterPoint().x, e1.getCenterPoint().y, e2.getCenterPoint().x, e2.getCenterPoint().y);
+    }
+
+    public static int random(int min, int max) {
+        return new Random().nextInt((max - min) + 1) + min;
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import de.caffeineaddicted.ld36prep.LD36Prep;
+import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 
 public class UnitEnemy extends UnitBase {
 
@@ -30,8 +31,8 @@ public class UnitEnemy extends UnitBase {
         }
     }
 
-    public UnitEnemy(LD36Prep game, UnitEnemy.Type type) {
-        super(game);
+    public UnitEnemy(InGameScreen screen, UnitEnemy.Type type) {
+        super(screen);
         this.type = type;
         setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
         setHP(def().hp);
@@ -39,7 +40,7 @@ public class UnitEnemy extends UnitBase {
     }
 
     protected void update() {
-        setTexture(game.getAssets().get(def().file, Texture.class));
+        setTexture(screen.game.getAssets().get(def().file, Texture.class));
         setSize(def().w, def().h);
         setSize(def().w, def().h);
     }

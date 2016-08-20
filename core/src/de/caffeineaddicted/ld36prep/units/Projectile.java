@@ -1,11 +1,10 @@
 package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import de.caffeineaddicted.ld36prep.LD36Prep;
+import de.caffeineaddicted.ld36prep.screens.InGameScreen;
+import de.caffeineaddicted.ld36prep.util.MathUtils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Projectile extends Entity {
 
@@ -43,12 +42,12 @@ public class Projectile extends Entity {
         }
     }
 
-    public Projectile(LD36Prep game, Projectile.Type type) {
-        this(game, type, null);
+    public Projectile(InGameScreen screen, Projectile.Type type) {
+        this(screen, type, null);
     }
 
-    public Projectile(LD36Prep game, Projectile.Type type, UnitEnemy target) {
-        super(game);
+    public Projectile(InGameScreen screen, Projectile.Type type, UnitEnemy target) {
+        super(screen);
         activeProjectiles.add(this);
         this.type = type;
         setTarget(target);
@@ -58,7 +57,7 @@ public class Projectile extends Entity {
     protected void update() {
         super.update();
         setSize(def().w, def().h);
-        setTexture(game.getAssets().get(def().file, Texture.class));
+        setTexture(screen.game.getAssets().get(def().file, Texture.class));
     }
 
     public Definition def() {

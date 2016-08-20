@@ -1,9 +1,8 @@
 package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import de.caffeineaddicted.ld36prep.LD36Prep;
+import de.caffeineaddicted.ld36prep.screens.InGameScreen;
+import de.caffeineaddicted.ld36prep.util.MathUtils;
 
 import java.util.ArrayList;
 
@@ -17,8 +16,8 @@ abstract public class UnitBase extends Entity {
 
     public static ArrayList<UnitBase> units = new ArrayList<UnitBase>();
 
-    public UnitBase(LD36Prep game) {
-        super(game);
+    public UnitBase(InGameScreen screen) {
+        super(screen);
         units.add(this);
     }
 

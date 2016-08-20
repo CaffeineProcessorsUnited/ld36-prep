@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
 
@@ -33,7 +34,7 @@ public class BackgroundScreen extends SGLScreen<LD36Prep> {
         Texture texBackground = new Texture("badlogic.jpg");
         texBackground.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         background = new Sprite(texBackground);
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        background.setSize(game.getCamera().viewportWidth, game.getCamera().viewportHeight);
     }
 
     public void render(float delta) {
@@ -45,7 +46,7 @@ public class BackgroundScreen extends SGLScreen<LD36Prep> {
             Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             game.getShape().begin(ShapeRenderer.ShapeType.Filled);
             game.getShape().setColor(0f, 0f, 0f, 0.6f);
-            game.getShape().rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            game.getShape().rect(game.getCamera().position.x - (game.getCamera().viewportWidth / 2), game.getCamera().position.y - (game.getCamera().viewportHeight / 2), game.getCamera().viewportWidth, game.getCamera().viewportHeight);
             game.getShape().end();
             Gdx.gl.glDisable(GL20.GL_BLEND);
         }

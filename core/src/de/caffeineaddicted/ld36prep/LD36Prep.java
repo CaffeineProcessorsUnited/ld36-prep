@@ -3,11 +3,14 @@ package de.caffeineaddicted.ld36prep;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import de.caffeineaddicted.ld36prep.messages.FinishedLoadingMessage;
@@ -21,11 +24,17 @@ import de.caffeineaddicted.sgl.messages.Message;
 import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
 
 public class LD36Prep extends SGLGame {
+    protected static final ApplicationConfiguration applicationConfiguration
+            = new ApplicationConfiguration()
+            .set(ApplicationConfiguration.Attribute.WIDTH, 720)
+            .set(ApplicationConfiguration.Attribute.HEIGHT, 720);
 
     private SpriteBatch batch;
     private ShapeRenderer shape;
     private Assets assets;
     private Music theme;
+    private Camera camera;
+    private Matrix4 idMatrix = new Matrix4();
 
     @Override
     public void create() {
@@ -33,6 +42,11 @@ public class LD36Prep extends SGLGame {
         batch = new SpriteBatch();
         shape = new ShapeRenderer();
         assets = new Assets();
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
+        shape.setProjectionMatrix(camera.combined);
         super.create();
     }
 
@@ -82,5 +96,20 @@ public class LD36Prep extends SGLGame {
 
     public Assets getAssets() {
         return assets;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public static final ApplicationConfiguration getConfig() {
+        if (applicationConfiguration == null) {
+            throw new RuntimeException("Provide a configuration!");
+        }
+        return applicationConfiguration;
+    }
+
+    public Matrix4 getIdMatrix() {
+        return idMatrix;
     }
 }

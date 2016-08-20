@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import de.caffeineaddicted.ld36prep.LD36Prep;
+import de.caffeineaddicted.ld36prep.map.Map;
 import de.caffeineaddicted.ld36prep.units.*;
 import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
 
@@ -24,8 +25,7 @@ import java.util.Iterator;
  */
 public class InGameScreen extends SGLScreen<LD36Prep> {
 
-    private Stage stage;
-    Drawable test;
+    private Map map;
 
     public InGameScreen(LD36Prep game) {
         super(game);
@@ -33,15 +33,15 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
     public void create() {
         game.debug("Creating InGameScreen");
-        stage = new Stage();
+        map = new Map(10, 10, game.getCamera().viewportWidth, game.getCamera().viewportHeight);
 
-        UnitEnemy unit1 = new UnitEnemy(game, UnitEnemy.Type.FEGGIT1);
+        UnitEnemy unit1 = new UnitEnemy(this, UnitEnemy.Type.FEGGIT1);
 
-        UnitEnemy unit2 = new UnitEnemy(game, UnitEnemy.Type.FEGGIT2);
+        UnitEnemy unit2 = new UnitEnemy(this, UnitEnemy.Type.FEGGIT2);
         unit2.translateY(-100);
 
-        UnitTower unit3 = new UnitTower(game, UnitTower.Type.FEGGIT3);
-        unit3.translate(300, 300);
+        UnitTower unit3 = new UnitTower(this, UnitTower.Type.FEGGIT3);
+        unit3.translate(map.gridToPos(4, 8));
 
     }
 
@@ -59,7 +59,6 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         }
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
 
         game.getBatch().begin();
         game.getBatch().setColor(new Color(1, 1, 1, 1));
