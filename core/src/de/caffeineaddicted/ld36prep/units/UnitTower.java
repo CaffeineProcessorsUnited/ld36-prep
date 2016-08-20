@@ -63,7 +63,7 @@ public class UnitTower extends UnitBase {
         this.type = type;
         this.level = 0;
         this.lastShot = def().reload;
-        this.targetStrategy = new NearestTargetStrategy();
+        this.targetStrategy = new MostBottomTargetStrategy();
         update();
     }
 
@@ -99,9 +99,9 @@ public class UnitTower extends UnitBase {
                 UnitEnemy enemy = (UnitEnemy) unit;
                 double angleToTarget = MathUtils.angleToPoint(getX(), getY(), enemy.getX(), enemy.getY());
                 setRotation(-(float) angleToTarget);
-                screen.game.debug("in range: " + enemy.type.name());
+                //screen.game.debug("in range: " + enemy.type.name());
                 Projectile p = new Projectile(screen, def().projectile, enemy);
-                screen.game.debug(getX() + "," + getY() + "," + getWidth() + "," + getHeight() + "," + getCenterPoint().x + "," + getCenterPoint().y);
+                //screen.game.debug(getX() + "," + getY() + "," + getWidth() + "," + getHeight() + "," + getCenterPoint().x + "," + getCenterPoint().y);
                 p.setCenterPosition(getCenterPoint().x, getCenterPoint().y);
                 lastShot = 0;
             }

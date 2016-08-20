@@ -29,6 +29,9 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     private TowerSelectionHUD towerSelectionHUD;
     private Map map;
 
+    private float waitTimer;
+    private float sleepTimer = 1.5f;
+
     public InGameScreen(LD36Prep game) {
         super(game);
     }
@@ -47,9 +50,20 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
         showPlacementHUD = false;
         towerSelectionHUD = new TowerSelectionHUD(this);
+
+        waitTimer = 0;
     }
 
     public void render(float delta) {
+        waitTimer += delta;
+        if (waitTimer > sleepTimer) {
+            waitTimer -= sleepTimer;
+            UnitEnemy enemy = new UnitEnemy(this, UnitEnemy.Type.values()[MathUtils.random(0, UnitEnemy.Type.values().length - 1)]);
+            enemy.translate(map.gridToPos(MathUtils.random(-10, 10), 8));
+
+            sleepTimer = Math.max(0.8f, sleepTimer * 0.995f);
+        }
+
         for (UnitBase unit : UnitBase.units) {
             unit.tick(delta);
         }
@@ -136,9 +150,12 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         Vector2 posnext = map.gridToPos(pos.x + 1, pos.y + 1);
         if (!UnitBase.GetUnitsInRect(selectedTowerX + 1, selectedTowerY + 1, posnext.x - 1, posnext.y - 1).isEmpty())
             return;
-        UnitTower tower = new UnitTower(this, UnitTower.Type.values()[towerSelectionHUD.getSelectedSlice()]);
-        Vector2 towerpos = map.getCenterInGird(selectedTowerX, selectedTowerY);
-        tower.setCenterPosition(towerpos.x, towerpos.y);
+        int selectedPiece = towerSelectionHUD.getSelectedSlice();
+        if (selectedPiece >= 0) {
+            UnitTower tower = new UnitTower(this, UnitTower.Type.values()[selectedPiece]);
+            Vector2 towerpos = map.getCenterInGird(selectedTowerX, selectedTowerY);
+            tower.setCenterPosition(towerpos.x, towerpos.y);
+        }
     }
 
     public void upgradeTower(int screenX, int screenY){

@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
+import de.caffeineaddicted.ld36prep.util.MathUtils;
+
+import java.util.ArrayList;
 
 public class UnitEnemy extends UnitBase {
 
@@ -76,5 +79,43 @@ public class UnitEnemy extends UnitBase {
 
     public void setHP(float hp) {
         this.hp = hp;
+    }
+
+    protected boolean moveDirection(DIRECTION dir, float delta) {
+        float x = getX();
+        float y = getY();
+        float nx = x;
+        float ny = y;
+
+        switch (dir) {
+            case NORTH:
+                ny += delta;
+                break;
+            case EAST:
+                nx += delta;
+                break;
+            case SOUTH:
+                ny -= delta;
+                break;
+            case WEST:
+                nx -= delta;
+                break;
+        }
+        nx = MathUtils.clamp(nx, 0, Gdx.graphics.getWidth());
+        ny = MathUtils.clamp(ny, 0, Gdx.graphics.getHeight());
+        if (nx + getWidth() > Gdx.graphics.getWidth()) {
+            nx = Gdx.graphics.getWidth() - getWidth();
+        }
+        if (ny + getHeight() > Gdx.graphics.getHeight()) {
+            ny = Gdx.graphics.getHeight() - getHeight();
+        }
+
+        ArrayList<UnitBase> unitsInRect = GetUnitsInRect(nx, ny, nx + getWidth(), ny + getHeight());
+        for (UnitBase unit : unitsInRect) {
+            if (!(unit instanceof UnitEnemy))
+                return false;
+        }
+        setPosition(nx, ny);
+        return true;
     }
 }
