@@ -12,6 +12,7 @@ public class UnitTower extends UnitBase {
     public final UnitTower.Type type;
     private int level;
     private float lastShot;
+    private TargetSelectionStrategy targetStrategy;
 
     public static class Definition {
         public final float range;
@@ -34,9 +35,9 @@ public class UnitTower extends UnitBase {
     }
 
     public static enum Type {
-        FEGGIT1(new Definition(10, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower.png")),
-        FEGGIT2(new Definition(4, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower.png")),
-        FEGGIT3(new Definition(30, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower.png"));
+        FEGGIT1(new Definition(10, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower2.png")),
+        FEGGIT2(new Definition(4, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower3.png")),
+        FEGGIT3(new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower1.png"));
 
         private ArrayList<Definition> levels = new ArrayList<Definition>();
 
@@ -60,6 +61,7 @@ public class UnitTower extends UnitBase {
         this.type = type;
         this.level = 0;
         this.lastShot = def().reload;
+        this.targetStrategy = new NearestTargetStrategy();
         update();
     }
 
@@ -82,16 +84,21 @@ public class UnitTower extends UnitBase {
 
     @Override
     public boolean tick(float delta) {
-        ArrayList<UnitBase> unitsInRange = getUnitsInRange(getX(), getY(), def().range);
         lastShot += delta;
-        for (UnitBase unit : unitsInRange) {
-            if (unit instanceof UnitEnemy && (lastShot >= (def().reload))) { //Is Enemy
-                UnitEnemy enemy = (UnitEnemy) unit;
-                game.debug("in range: " + enemy.type.name());
-                Projectile p = new Projectile(game, def().projectile, enemy);
-                p.setPosition(getCenterPoint().x, getCenterPoint().y);
-                lastShot = 0;
-            }
+        if (lastShot < (def().reload)) {
+            return false;
+        }
+        ArrayList<UnitBase> unitsInRange = getUnitsInRange(getX(), getY(), def().range);
+        int targetIndex = this.targetStrategy.selectTarget(unitsInRange, this);
+        if (targetIndex >= 0) {
+            UnitEnemy enemy = (UnitEnemy) unitsInRange.get(targetIndex);
+            double angleToTarget = MathUtils.angleToPoint(getX(), getY(), enemy.getX(), enemy.getY());
+            setRotation(-(float) angleToTarget);
+            game.debug("in range: " + enemy.type.name());
+            Projectile p = new Projectile(game, def().projectile, enemy);
+            game.debug(getX() + "," + getY() + "," + getWidth() + "," + getHeight() + "," + getCenterPoint().x + "," + getCenterPoint().y);
+            p.setCenterPosition(getCenterPoint().x, getCenterPoint().y);
+            lastShot = 0;
         }
         return false;
     }

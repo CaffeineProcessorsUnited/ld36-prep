@@ -53,9 +53,9 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         Iterator<Projectile> projectileIterator = Projectile.activeProjectiles.iterator();
         while (projectileIterator.hasNext()) {
             Projectile projectile = projectileIterator.next();
-            boolean todelete = projectile.tick(delta);
-            if (todelete)
+            if (projectile.tick(delta)) {
                 projectileIterator.remove();
+            }
         }
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -63,12 +63,11 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
         game.getBatch().begin();
         game.getBatch().setColor(new Color(1, 1, 1, 1));
-        for (UnitBase unit : UnitBase.units) {
-            unit.draw(game.getBatch());
-        }
-
         for (Projectile projectile : Projectile.activeProjectiles) {
             projectile.draw(game.getBatch());
+        }
+        for (UnitBase unit : UnitBase.units) {
+            unit.draw(game.getBatch());
         }
         game.getBatch().end();
 

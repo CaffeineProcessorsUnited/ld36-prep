@@ -21,6 +21,9 @@ public class Assets extends AssetManager {
         load("uiskin.json", Skin.class);
         load("enemy.png", Texture.class);
         load("tower.png", Texture.class);
+        load("tower1.png", Texture.class);
+        load("tower2.png", Texture.class);
+        load("tower3.png", Texture.class);
         load("projectile.png", Texture.class);
     }
 }

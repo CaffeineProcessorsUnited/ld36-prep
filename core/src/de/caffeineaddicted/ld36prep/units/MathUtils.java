@@ -32,4 +32,12 @@ public class MathUtils {
         double angle = Math.toDegrees(Math.atan2(x2 - x1, y2 - y1));
         return (angle < 0) ? angle + 360 : angle;
     }
+
+    public static float distanceP2P(float x1, float y1, float x2, float y2) {
+        return (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
+    public static float distanceP2P(Entity e1, Entity e2) {
+        return MathUtils.distanceP2P(e1.getCenterPoint().x, e1.getCenterPoint().y, e2.getCenterPoint().x, e2.getCenterPoint().y);
+    }
 }

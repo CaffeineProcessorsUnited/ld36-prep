@@ -40,9 +40,9 @@
      inkscape:window-height="1056"
      id="namedview3904"
      showgrid="false"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="44.059421"
-     inkscape:cy="287.0304"
+     inkscape:zoom="4"
+     inkscape:cx="320.08658"
+     inkscape:cy="188.03811"
      inkscape:window-x="1145"
      inkscape:window-y="864"
      inkscape:window-maximized="1"
@@ -212,4 +212,135 @@
        x="280.80255"
        id="tspan3353"
        sodipodi:role="line">Pink Fluffy Defence</tspan></text>
+  <g
+     id="g3499"
+     inkscape:export-xdpi="90"
+     inkscape:export-ydpi="90">
+    <rect
+       style="fill:none"
+       id="rect3374"
+       width="32"
+       height="32"
+       x="321.4285"
+       y="291.20248" />
+    <g
+       id="g3493">
+      <circle
+         r="12.28598"
+         cy="307.20248"
+         cx="337.4285"
+         id="circle3378"
+         style="fill:#0000ff" />
+      <g
+         id="g3489">
+        <rect
+           style="fill:#ff0000"
+           id="rect3380"
+           width="2.8284273"
+           height="16.263456"
+           x="336.01428"
+           y="292.0864" />
+        <path
+           inkscape:transform-center-x="2.4801825e-05"
+           inkscape:transform-center-y="-2.2541022"
+           d="m 345.23692,311.96477 -15.61685,0 7.80843,-13.52459 z"
+           inkscape:randomized="0"
+           inkscape:rounded="0"
+           inkscape:flatsided="true"
+           sodipodi:arg2="1.5707963"
+           sodipodi:arg1="0.52359878"
+           sodipodi:r2="4.5081968"
+           sodipodi:r1="9.0163946"
+           sodipodi:cy="307.45657"
+           sodipodi:cx="337.4285"
+           sodipodi:sides="3"
+           id="path3402"
+           style="fill:#ffff00"
+           sodipodi:type="star" />
+      </g>
+    </g>
+  </g>
+  <g
+     id="g3428"
+     inkscape:export-xdpi="90"
+     inkscape:export-ydpi="90">
+    <rect
+       y="291.20248"
+       x="281.4285"
+       height="32"
+       width="32"
+       id="rect3356"
+       style="fill:none" />
+    <g
+       id="g3422">
+      <circle
+         style="fill:#0000ff"
+         id="path3358"
+         cx="297.4285"
+         cy="307.20248"
+         r="12.28598" />
+      <g
+         id="g3418">
+        <rect
+           y="292.0864"
+           x="294.42328"
+           height="16.263456"
+           width="6.0104079"
+           id="rect3360"
+           style="fill:#ff0000" />
+        <circle
+           r="6.6291261"
+           cy="307.20248"
+           cx="297.4285"
+           id="path3406"
+           style="fill:#ffff00" />
+      </g>
+    </g>
+  </g>
+  <g
+     id="g3519"
+     inkscape:export-xdpi="90"
+     inkscape:export-ydpi="90">
+    <rect
+       y="291.20248"
+       x="361.4285"
+       height="32"
+       width="32"
+       id="rect3384"
+       style="fill:none" />
+    <g
+       id="g3513">
+      <circle
+         style="fill:#0000ff"
+         id="circle3388"
+         cx="377.4285"
+         cy="307.20248"
+         r="12.28598" />
+      <g
+         id="g3466">
+        <rect
+           y="292.0864"
+           x="372.83228"
+           height="16.263456"
+           width="9.1923885"
+           id="rect3390"
+           style="fill:#ff0000" />
+        <path
+           d="m 382.79468,316.49699 -10.73237,0 -5.36618,-9.29451 5.36618,-9.2945 10.73237,0 5.36618,9.2945 z"
+           inkscape:randomized="0"
+           inkscape:rounded="0"
+           inkscape:flatsided="true"
+           sodipodi:arg2="1.5707963"
+           sodipodi:arg1="1.0471976"
+           sodipodi:r2="9.2945032"
+           sodipodi:r1="10.732367"
+           sodipodi:cy="307.20248"
+           sodipodi:cx="377.4285"
+           sodipodi:sides="6"
+           id="path3458"
+           style="fill:#ffff00"
+           sodipodi:type="star" />
+      </g>
+    </g>
+  </g>
 </svg>

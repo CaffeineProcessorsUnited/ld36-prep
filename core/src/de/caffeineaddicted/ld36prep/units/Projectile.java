@@ -32,8 +32,8 @@ public class Projectile extends Entity {
     }
 
     public static enum Type {
-        FEGGIT1(new Definition(0, 5, 10, 16, 16, "tower.png")),
-        FEGGIT2(new Definition(1, 20, 10, 16, 16, "tower.png")),
+        FEGGIT1(new Definition(0, 5, 10, 16, 16, "projectile.png")),
+        FEGGIT2(new Definition(1, 20, 10, 16, 16, "projectile.png")),
         FEGGIT3(new Definition(0, 1, 10, 16, 16, "projectile.png"));
 
         public final Definition defintion;

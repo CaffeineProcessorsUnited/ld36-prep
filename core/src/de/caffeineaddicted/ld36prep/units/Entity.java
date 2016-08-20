@@ -122,6 +122,11 @@ public abstract class Entity {
         setY(y);
     }
 
+    public void setCenterPosition(float x, float y) {
+        setX(x - getWidth() / 2);
+        setY(y - getHeight() / 2);
+    }
+
     public void translateX(float x) {
         setX(getX() + x);
     }
@@ -165,5 +170,10 @@ public abstract class Entity {
 
     public void setScaleY(float scaleY) {
         this.scaleY = scaleY;
+    }
+
+    public void setScale(float scale) {
+        setScaleX(scale);
+        setScaleY(scale);
     }
 }
