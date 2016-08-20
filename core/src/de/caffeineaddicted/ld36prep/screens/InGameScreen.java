@@ -142,8 +142,9 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     }
 
     public void upgradeTower(int screenX, int screenY){
-        Vector2 pos = map.gridToPos(map.posToGrid(screenX, screenY));
-        Vector2 posnext = map.gridToPos(pos.x + 1, pos.y + 1);
+        Vector2 p = map.posToGrid(screenX, screenY);
+        Vector2 pos = map.gridToPos(p);
+        Vector2 posnext = map.gridToPos(p.x + 1, p.y + 1);
         ArrayList<UnitBase> units = UnitBase.GetUnitsInRect(pos.x + 1, pos.y + 1, posnext.x - 1, posnext.y - 1);
         if(units.isEmpty())
             return;
