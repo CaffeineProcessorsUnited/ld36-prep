@@ -39,6 +39,7 @@ public class LD36Prep extends SGLGame {
     private Camera camera;
     private Matrix4 idMatrix = new Matrix4();
     private InGameInputProcessor inputProcessor;
+    private boolean paused;
 
     @Override
     public void create() {
@@ -68,12 +69,14 @@ public class LD36Prep extends SGLGame {
 
     @Override
     public void pause () {
+        paused = true;
         if (theme != null) theme.pause();
         rootScreen.pause();
     }
 
     @Override
     public void resume () {
+        paused = false;
         if (theme != null) theme.play();
         rootScreen.resume();
     }
@@ -99,7 +102,8 @@ public class LD36Prep extends SGLGame {
             debug("Received message after finishing loading assets");
             theme = getAssets().get("theme.ogg", Music.class);
             theme.setLooping(true);
-            theme.play();
+            if (paused)
+                theme.play();
             //message(new ShowMainMenuMessage());
             rootScreen.hideScreen(LoadingScreen.class);
             rootScreen.showScreen(InGameScreen.class, SGLRootScreen.ZINDEX.NEAR);

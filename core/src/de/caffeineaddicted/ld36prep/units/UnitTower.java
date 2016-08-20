@@ -89,9 +89,6 @@ public class UnitTower extends UnitBase {
     @Override
     public boolean tick(float delta) {
         lastShot += delta;
-        if (lastShot < (def().reload)) {
-            return false;
-        }
         ArrayList<UnitBase> unitsInRange = getUnitsInRange(getX(), getY(), unitToPixel(def().range));
         ArrayList<UnitBase> selectedUnits = this.targetStrategy.selectTarget(unitsInRange, this);
 
@@ -100,11 +97,11 @@ public class UnitTower extends UnitBase {
                 UnitEnemy enemy = (UnitEnemy) unit;
                 double angleToTarget = MathUtils.angleToPoint(getX(), getY(), enemy.getX(), enemy.getY());
                 setRotation(-(float) angleToTarget);
-                //screen.game.debug("in range: " + enemy.type.name());
-                Projectile p = new Projectile(screen, def().projectile, enemy);
-                //screen.game.debug(getX() + "," + getY() + "," + getWidth() + "," + getHeight() + "," + getCenterPoint().x + "," + getCenterPoint().y);
-                p.setCenterPosition(getCenterPoint().x, getCenterPoint().y);
-                lastShot = 0;
+                if (lastShot >= (def().reload)) {
+                    Projectile p = new Projectile(screen, def().projectile, enemy);
+                    p.setCenterPosition(getCenterPoint().x, getCenterPoint().y);
+                    lastShot = 0;
+                }
             }
         }
         return false;
