@@ -114,6 +114,30 @@ public class Map extends Entity {
         return (gx == pos.x && gy == pos.y);
     }
 
+    public Vector2 getStart() {
+        Vector2 start = new Vector2();
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (map[c][r] == GroundType.START) {
+                    start.set(c, r);
+                }
+            }
+        }
+        return start;
+    }
+
+    public Vector2 getFinish() {
+        Vector2 finish = new Vector2();
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (map[c][r] == GroundType.FINISH) {
+                    finish.set(c, r);
+                }
+            }
+        }
+        return finish;
+    }
+
     @Override
     public void draw(Batch batch) {
         for (int r = 0; r < rows; r++) {
