@@ -12,18 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 import de.caffeineaddicted.ld36prep.LD36Prep;
+import de.caffeineaddicted.ld36prep.map.Map;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Malte Heinzelmann
  */
 public abstract class Entity {
     protected InGameScreen screen;
-    protected Map<String, Drawable> drawables;
+    protected HashMap<String, Drawable> drawables;
 
     protected int width;
     protected int height;
@@ -45,6 +45,10 @@ public abstract class Entity {
     }
 
     protected void update() {
+    }
+
+    public float unitToPixel(float units) {
+        return screen.getMap().unitToPixel(units);
     }
 
     private void updateCenter() {

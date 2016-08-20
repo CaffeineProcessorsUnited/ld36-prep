@@ -2,8 +2,6 @@ package de.caffeineaddicted.ld36prep.map;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.units.Entity;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
@@ -22,6 +20,10 @@ public class Map extends Entity {
     private int gridHeight;
     public boolean renderGrid = true;
     private GroundType[][] map;
+    private float oneUnit;
+
+    private int hoverX = -1;
+    private int hoverY = -1;
 
     public Map(InGameScreen screen, int cols, int rows) {
         super(screen);
@@ -32,6 +34,7 @@ public class Map extends Entity {
         addTexture("path.png");
         addTexture("start.png");
         addTexture("finish.png");
+        addTexture("hover.png");
     }
 
     public Map(InGameScreen screen, int cols, int rows, float width, float height) {
@@ -63,7 +66,7 @@ public class Map extends Entity {
     }
 
     public Vector2 posToGrid(float x, float y) {
-        return new Vector2(x / gridWidth, y / gridHeight);
+        return new Vector2((int) Math.floor(x / gridWidth), (int) Math.floor(y / gridHeight));
     }
 
     public Vector2 posToGrid(Vector2 pos) {
@@ -71,19 +74,31 @@ public class Map extends Entity {
     }
 
     public float unitToPixel(float units) {
-        return units * (MathUtils.distanceP2P(new Vector2(0, 0), gridToPos(1, 1)));
+        return units * oneUnit;
     }
 
     public void resize(float width, float height) {
         this.gridWidth = (int) width / this.cols;
         this.gridHeight = (int) height / this.rows;
+        oneUnit = MathUtils.distanceP2P(new Vector2(0, 0), gridToPos(1, 1));
+    }
+
+    public void mouseMoved(float x, float y) {
+        Vector2 pos = posToGrid(x, y);
+        hoverX = (int) pos.x;
+        hoverY = (int) pos.y;
+    }
+
+    public boolean isInGrid(float gx, float gy, float x, float y) {
+        Vector2 pos = posToGrid(x, y);
+        return (gx == pos.x && gy == pos.y);
     }
 
     @Override
     public void draw(Batch batch) {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                screen.game.log(gridToPos(c, r).x + "," + gridToPos(c, r).y + ": " + map[c][r].name());
+                //screen.game.log(gridToPos(c, r).x + "," + gridToPos(c, r).y + ": " + map[c][r].name());
                 switch (map[c][r]) {
                     case START:
                         draw(batch, drawables.get("start.png"), gridToPos(c, r), gridWidth, gridHeight, 1, 1);
@@ -97,6 +112,9 @@ public class Map extends Entity {
                     case TOWER:
                         draw(batch, drawables.get("grass.png"), gridToPos(c, r), gridWidth, gridHeight, 1, 1);
                         break;
+                }
+                if (hoverX == c && hoverY == r) {
+                    draw(batch, drawables.get("hover.png"), gridToPos(c, r), gridWidth, gridHeight, 1, 1);
                 }
             }
         }

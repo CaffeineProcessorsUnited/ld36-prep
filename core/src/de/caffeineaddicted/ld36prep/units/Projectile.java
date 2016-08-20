@@ -89,7 +89,7 @@ public class Projectile extends Entity {
         double angleToTarget = MathUtils.angleToPoint(getX(), getY(), target.getX(), target.getY());
         setRotation(-(float) angleToTarget);
 
-        translate(delta * def().speed * dirx, delta * def().speed * diry);
+        translate(delta * unitToPixel(def().speed) * dirx, delta * unitToPixel(def().speed) * diry);
 
         if (MathUtils.intersectRect(target.getX(), target.getY(), target.getX() + target.getWidth(), target.getY() + target.getHeight(),
                 getX(), getY(), getX() + getWidth(), getY() + getHeight())) {

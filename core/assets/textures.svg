@@ -41,8 +41,8 @@
      id="namedview3904"
      showgrid="false"
      inkscape:zoom="4"
-     inkscape:cx="288.17641"
-     inkscape:cy="200.83915"
+     inkscape:cx="248.7172"
+     inkscape:cy="257.40744"
      inkscape:window-x="1145"
      inkscape:window-y="864"
      inkscape:window-maximized="1"
@@ -370,4 +370,11 @@
      style="fill:#00ffff"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90" />
+  <path
+     inkscape:connector-curvature="0"
+     d="m 243.93823,251.47451 24.15617,0 c 2.17268,0 3.92192,1.56448 3.92192,3.50788 l 0,24.98452 c 0,1.94334 -1.74917,3.50788 -3.92192,3.50788 l -24.15617,0 c -2.17268,0 -3.92192,-1.56454 -3.92192,-3.50788 l 0,-24.98452 c 0,-1.9434 1.74917,-3.50788 3.92192,-3.50788 z"
+     id="path3380"
+     style="fill:#ff50a2;fill-opacity:0.50196081;stroke:none;stroke-width:2.7019999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:13.65400028;opacity:1"
+     inkscape:export-xdpi="180"
+     inkscape:export-ydpi="180" />
 </svg>

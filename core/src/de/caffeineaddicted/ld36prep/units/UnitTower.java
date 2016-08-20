@@ -91,7 +91,7 @@ public class UnitTower extends UnitBase {
         if (lastShot < (def().reload)) {
             return false;
         }
-        ArrayList<UnitBase> unitsInRange = getUnitsInRange(getX(), getY(), def().range);
+        ArrayList<UnitBase> unitsInRange = getUnitsInRange(getX(), getY(), unitToPixel(def().range));
         ArrayList<UnitBase> selectedUnits = this.targetStrategy.selectTarget(unitsInRange, this);
 
         if (!selectedUnits.isEmpty()) {

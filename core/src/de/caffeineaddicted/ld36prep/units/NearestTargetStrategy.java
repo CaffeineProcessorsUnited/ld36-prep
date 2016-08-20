@@ -12,7 +12,7 @@ public class NearestTargetStrategy implements TargetSelectionStrategy {
     public ArrayList<UnitBase> selectTarget(ArrayList<UnitBase> units, UnitTower me) {
         int index = -1;
         int minindex = index;
-        float distance = me.def().range + 1;
+        float distance = me.unitToPixel(me.def().range + 1);
         for (UnitBase unit : units) {
             index++;
             if (unit instanceof UnitEnemy) {
@@ -27,7 +27,7 @@ public class NearestTargetStrategy implements TargetSelectionStrategy {
 
         ArrayList<UnitBase> ret = new ArrayList<UnitBase>();
 
-        if(distance <= me.def().range){
+        if(distance <= me.unitToPixel(me.def().range)){
             ret.add(units.get(minindex));
         }
         return ret;

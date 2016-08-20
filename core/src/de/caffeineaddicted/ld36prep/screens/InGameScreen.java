@@ -3,16 +3,8 @@ package de.caffeineaddicted.ld36prep.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.map.Map;
 import de.caffeineaddicted.ld36prep.units.*;
@@ -113,6 +105,7 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
             upgradeTower(screenX, screenY);
         }
     }
+
     public void touchMoved(int screenX, int screenY){
         currentMouseX = screenX;
         currentMouseY = screenY;
@@ -120,6 +113,10 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         float angle = (float) MathUtils.angleToPoint(selectedTowerX, selectedTowerY, screenX, screenY);
         int slice = MathUtils.selectedSlice(angle, UnitTower.Type.values().length);
         towerSelectionHUD.setSelectedSlice(slice);
+    }
+
+    public void mouseMoved(int screenX, int screenY){
+        map.mouseMoved(screenX, screenY);
     }
 
     public void placeTower(int screenX, int screenY){
@@ -143,5 +140,9 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
                 tower.levelup();
             }
         }
+    }
+
+    public Map getMap() {
+        return map;
     }
 }

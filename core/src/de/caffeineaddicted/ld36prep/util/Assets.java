@@ -33,5 +33,6 @@ public class Assets extends AssetManager {
         load("path.png", Texture.class);
         load("start.png", Texture.class);
         load("finish.png", Texture.class);
+        load("hover.png", Texture.class);
     }
 }

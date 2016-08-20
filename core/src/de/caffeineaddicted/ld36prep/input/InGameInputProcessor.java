@@ -56,6 +56,7 @@ public class InGameInputProcessor implements InputProcessor{
     public boolean mouseMoved(int screenX, int screenY) {
         screenY = Gdx.graphics.getHeight() - screenY;
         screen.touchMoved(screenX, screenY);
+        screen.mouseMoved(screenX, screenY);
         return true;
     }
 

@@ -11,9 +11,9 @@ public class UnitEnemy extends UnitBase {
     private float hp;
 
     public static enum Type {
-        FEGGIT1(10, 5, 32, 32, "enemy.png"),
-        FEGGIT2(20, 2.5f, 32, 32, "enemy.png"),
-        FEGGIT3(100, 1, 32, 32, "enemy.png");
+        FEGGIT1(10, 0.5f, 32, 32, "enemy.png"),
+        FEGGIT2(20, 0.25f, 32, 32, "enemy.png"),
+        FEGGIT3(100, 0.1f, 32, 32, "enemy.png");
 
         public final float hp;
         public final float speed;
@@ -55,7 +55,7 @@ public class UnitEnemy extends UnitBase {
         if (hp < 0) //Dead
             return true;
 
-        delta *= def().speed;
+        delta *= unitToPixel(def().speed);
 
         for (DIRECTION dir : DIRECTION.values()) {
             if (moveDirection(dir, delta))
