@@ -88,16 +88,19 @@ public class UnitTower extends UnitBase {
             return false;
         }
         ArrayList<UnitBase> unitsInRange = getUnitsInRange(getX(), getY(), def().range);
-        int targetIndex = this.targetStrategy.selectTarget(unitsInRange, this);
-        if (targetIndex >= 0) {
-            UnitEnemy enemy = (UnitEnemy) unitsInRange.get(targetIndex);
-            double angleToTarget = MathUtils.angleToPoint(getX(), getY(), enemy.getX(), enemy.getY());
-            setRotation(-(float) angleToTarget);
-            screen.game.debug("in range: " + enemy.type.name());
-            Projectile p = new Projectile(screen, def().projectile, enemy);
-            screen.game.debug(getX() + "," + getY() + "," + getWidth() + "," + getHeight() + "," + getCenterPoint().x + "," + getCenterPoint().y);
-            p.setCenterPosition(getCenterPoint().x, getCenterPoint().y);
-            lastShot = 0;
+        ArrayList<UnitBase> selectedUnits = this.targetStrategy.selectTarget(unitsInRange, this);
+
+        if (!selectedUnits.isEmpty()) {
+            for(UnitBase unit:selectedUnits){
+                UnitEnemy enemy = (UnitEnemy) unit;
+                double angleToTarget = MathUtils.angleToPoint(getX(), getY(), enemy.getX(), enemy.getY());
+                setRotation(-(float) angleToTarget);
+                screen.game.debug("in range: " + enemy.type.name());
+                Projectile p = new Projectile(screen, def().projectile, enemy);
+                screen.game.debug(getX() + "," + getY() + "," + getWidth() + "," + getHeight() + "," + getCenterPoint().x + "," + getCenterPoint().y);
+                p.setCenterPosition(getCenterPoint().x, getCenterPoint().y);
+                lastShot = 0;
+            }
         }
         return false;
     }
