@@ -11,12 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 import de.caffeineaddicted.ld36prep.LD36Prep;
+import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 
 /**
  * @author Malte Heinzelmann
  */
 public abstract class Entity {
-    protected LD36Prep game;
+    protected InGameScreen screen;
     protected Drawable drawable;
 
     private int width;
@@ -31,8 +32,8 @@ public abstract class Entity {
 
     private float rotation;
 
-    public Entity(LD36Prep game) {
-        this.game = game;
+    public Entity(InGameScreen screen) {
+        this.screen = screen;
         this.center = new Vector2();
         this.centerpoint = new Vector2();
     }
@@ -49,12 +50,13 @@ public abstract class Entity {
         centerpoint.set(center.x + getX(), center.y + getY());
     }
 
-    public void setTexture(Texture texture) {
-        setDrawable(new TextureRegionDrawable(new TextureRegion(texture)));
+    public Entity setTexture(Texture texture) {
+        return setDrawable(new TextureRegionDrawable(new TextureRegion(texture)));
     }
 
-    public void setDrawable(Drawable drawable) {
+    public Entity setDrawable(Drawable drawable) {
         this.drawable = drawable;
+        return this;
     }
 
     public void draw(Batch batch) {
@@ -80,100 +82,117 @@ public abstract class Entity {
         return width;
     }
 
-    public void setWidth(int width) {
+    public Entity setWidth(int width) {
         this.width = width;
         updateCenter();
+        return this;
     }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public Entity setHeight(int height) {
         this.height = height;
         updateCenter();
+        return this;
     }
 
-    public void setSize(int width, int height) {
+    public Entity setSize(int width, int height) {
         setWidth(width);
         setHeight(height);
+        return this;
     }
 
     public float getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public Entity setX(float x) {
         this.x = x;
         updateCenterPoint();
+        return this;
     }
 
     public float getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public Entity setY(float y) {
         this.y = y;
         updateCenterPoint();
+        return this;
     }
 
-    public void setPosition(float x, float y) {
+    public Entity setPosition(float x, float y) {
         setX(x);
         setY(y);
+        return this;
     }
 
-    public void setCenterPosition(float x, float y) {
+    public Entity setCenterPosition(float x, float y) {
         setX(x - getWidth() / 2);
         setY(y - getHeight() / 2);
+        return this;
     }
 
-    public void translateX(float x) {
-        setX(getX() + x);
+    public Entity translateX(float x) {
+        return setX(getX() + x);
     }
 
-    public void translateY(float y) {
-        setY(getY() + y);
+    public Entity translateY(float y) {
+        return setY(getY() + y);
     }
 
-    public void translate(float x, float y) {
-        translateX(x);
-        translateY(y);
+    public Entity translate(float x, float y) {
+        return translate(new Vector2(x, y));
+    }
+
+    public Entity translate(Vector2 v) {
+        translateX(v.x);
+        translateY(v.y);
+        return this;
     }
 
     public float getRotation() {
         return rotation;
     }
 
-    public void setRotation (float degrees) {
+    public Entity setRotation (float degrees) {
         if (rotation != degrees) {
             rotation = degrees;
         }
+        return this;
     }
 
-    public void rotateBy(float amountInDegrees) {
+    public Entity rotateBy(float amountInDegrees) {
         if (amountInDegrees != 0) {
             rotation = amountInDegrees;
         }
+        return this;
     }
 
     public float getScaleX() {
         return scaleX;
     }
 
-    public void setScaleX(float scaleX) {
+    public Entity setScaleX(float scaleX) {
         this.scaleX = scaleX;
+        return this;
     }
 
     public float getScaleY() {
         return scaleY;
     }
 
-    public void setScaleY(float scaleY) {
+    public Entity setScaleY(float scaleY) {
         this.scaleY = scaleY;
+        return this;
     }
 
-    public void setScale(float scale) {
+    public Entity setScale(float scale) {
         setScaleX(scale);
         setScaleY(scale);
+        return this;
     }
 }

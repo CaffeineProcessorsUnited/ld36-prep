@@ -1,5 +1,7 @@
 package de.caffeineaddicted.ld36prep.units;
 
+import de.caffeineaddicted.ld36prep.util.MathUtils;
+
 import java.util.ArrayList;
 
 /**
