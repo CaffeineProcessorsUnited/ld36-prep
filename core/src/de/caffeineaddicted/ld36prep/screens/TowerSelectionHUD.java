@@ -30,6 +30,10 @@ public class TowerSelectionHUD extends Entity {
         update();
     }
 
+    public int getSelectedSlice() {
+        return selectedSlice;
+    }
+
     @Override
     public void draw(Batch batch) {
         draw(batch, drawables.get("TowerHUD.png"));

@@ -1,8 +1,10 @@
 package de.caffeineaddicted.ld36prep.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import de.caffeineaddicted.ld36prep.LD36Prep;
@@ -85,15 +87,24 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     }
 
     public void touchDown(int screenX, int screenY, int pointer, int button) {
-        if (button == 1) {
-            selectedTowerX = screenX;
-            selectedTowerY = screenY;
-            showPlacementHUD = true;
-            towerSelectionHUD.setSelectedSlice(-1);
-            towerSelectionHUD.setCenterPosition(selectedTowerX, selectedTowerY);
+        switch (button) {
+            case Input.Buttons.LEFT:
+                map.setSelected(screenX, screenY);
+                break;
+            case Input.Buttons.RIGHT:
+                Vector2 p = map.posToGrid(screenX, screenY);
+                Vector2 pos = map.gridToPos(p);
+                Vector2 posnext = map.gridToPos(p.cpy().add(1, 1));
+                selectedTowerX = pos.x;
+                selectedTowerY = pos.y;
+                showPlacementHUD = true;
+                towerSelectionHUD.setSelectedSlice(-1);
+                Vector2 hudpos = map.getCenterInGird(selectedTowerX, selectedTowerY);
+                towerSelectionHUD.setCenterPosition(hudpos.x, hudpos.y);
 
-            if (!UnitBase.GetUnitsInRect(selectedTowerX - 16, selectedTowerY - 16, selectedTowerX + 16, selectedTowerY + 16).isEmpty())
-                showPlacementHUD = false;
+                if (!UnitBase.GetUnitsInRect(pos.x + 1, pos.y + 1, posnext.x - 1, posnext.y - 1).isEmpty())
+                    showPlacementHUD = false;
+                break;
         }
     }
 
@@ -109,29 +120,31 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     public void touchMoved(int screenX, int screenY){
         currentMouseX = screenX;
         currentMouseY = screenY;
+        Vector2 pos = map.getCenterInGird(selectedTowerX, selectedTowerY);
 
-        float angle = (float) MathUtils.angleToPoint(selectedTowerX, selectedTowerY, screenX, screenY);
+        float angle = (float) MathUtils.angleToPoint(pos.x, pos.y, screenX, screenY);
         int slice = MathUtils.selectedSlice(angle, UnitTower.Type.values().length);
         towerSelectionHUD.setSelectedSlice(slice);
     }
 
     public void mouseMoved(int screenX, int screenY){
-        map.mouseMoved(screenX, screenY);
+        map.setHovered(screenX, screenY);
     }
 
     public void placeTower(int screenX, int screenY){
-        if (!UnitBase.GetUnitsInRect(selectedTowerX - 16, selectedTowerY - 16, selectedTowerX + 16, selectedTowerY + 16).isEmpty())
+        Vector2 pos = map.posToGrid(selectedTowerX, selectedTowerY);
+        Vector2 posnext = map.gridToPos(pos.x + 1, pos.y + 1);
+        if (!UnitBase.GetUnitsInRect(selectedTowerX + 1, selectedTowerY + 1, posnext.x - 1, posnext.y - 1).isEmpty())
             return;
-
-        float angle = (float) MathUtils.angleToPoint(selectedTowerX, selectedTowerY, screenX, screenY);
-        int slice = MathUtils.selectedSlice(angle, UnitTower.Type.values().length);
-
-        UnitTower tower = new UnitTower(this, UnitTower.Type.values()[slice]);
-        tower.setCenterPosition(selectedTowerX, selectedTowerY);
+        UnitTower tower = new UnitTower(this, UnitTower.Type.values()[towerSelectionHUD.getSelectedSlice()]);
+        Vector2 towerpos = map.getCenterInGird(selectedTowerX, selectedTowerY);
+        tower.setCenterPosition(towerpos.x, towerpos.y);
     }
 
     public void upgradeTower(int screenX, int screenY){
-        ArrayList<UnitBase> units = UnitBase.GetUnitsInRect(screenX-16,screenY-16, screenX+16,screenY+16);
+        Vector2 pos = map.gridToPos(map.posToGrid(screenX, screenY));
+        Vector2 posnext = map.gridToPos(pos.x + 1, pos.y + 1);
+        ArrayList<UnitBase> units = UnitBase.GetUnitsInRect(pos.x + 1, pos.y + 1, posnext.x - 1, posnext.y - 1);
         if(units.isEmpty())
             return;
         for(UnitBase unit: units){

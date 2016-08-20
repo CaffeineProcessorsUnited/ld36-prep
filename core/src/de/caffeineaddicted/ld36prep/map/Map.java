@@ -21,7 +21,10 @@ public class Map extends Entity {
     public boolean renderGrid = true;
     private GroundType[][] map;
     private float oneUnit;
+    private Vector2 center;
 
+    private int selectX = -1;
+    private int selectY = -1;
     private int hoverX = -1;
     private int hoverY = -1;
 
@@ -81,9 +84,24 @@ public class Map extends Entity {
         this.gridWidth = (int) width / this.cols;
         this.gridHeight = (int) height / this.rows;
         oneUnit = MathUtils.distanceP2P(new Vector2(0, 0), gridToPos(1, 1));
+        center = new Vector2(gridWidth / 2, gridHeight / 2);
     }
 
-    public void mouseMoved(float x, float y) {
+    public Vector2 getCenterInGird(float x, float y) {
+        return center.cpy().add(gridToPos(posToGrid(x, y)));
+    }
+
+    public Vector2 getCenter(float x, float y) {
+        return center.cpy().add(gridToPos(x, y));
+    }
+
+    public void setSelected(float x, float y) {
+        Vector2 pos = posToGrid(x, y);
+        selectX = (int) pos.x;
+        selectY = (int) pos.y;
+    }
+
+    public void setHovered(float x, float y) {
         Vector2 pos = posToGrid(x, y);
         hoverX = (int) pos.x;
         hoverY = (int) pos.y;
