@@ -4,13 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.input.InGameInputProcessor;
 import de.caffeineaddicted.ld36prep.map.Map;
 import de.caffeineaddicted.ld36prep.units.*;
+import de.caffeineaddicted.ld36prep.util.Assets;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
 
@@ -29,6 +32,10 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     private boolean showPlacementHUD;
     private TowerSelectionHUD towerSelectionHUD;
     private Map map;
+    private BitmapFont font;
+
+    public int money = 500;
+    public int score = 0;
 
     private float waitTimer;
     private float sleepTimer = 1.5f;
@@ -52,6 +59,8 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
         showPlacementHUD = false;
         towerSelectionHUD = new TowerSelectionHUD(this);
+
+        font = game.getAssets().get("uiskin.json", Skin.class).getFont("font_droid_sans_28pt_bold");
 
         waitTimer = 0;
     }
@@ -97,6 +106,9 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         if (showPlacementHUD) {
             towerSelectionHUD.draw(game.getBatch());
         }
+
+        font.draw(game.getBatch(), "Money: " + money, 10, game.getCamera().viewportHeight - 10);
+        font.draw(game.getBatch(), "Score:" + score, 10, game.getCamera().viewportHeight - font.getCapHeight() - 20);
 
         game.getBatch().end();
 
@@ -157,9 +169,13 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
         int selectedPiece = towerSelectionHUD.getSelectedSlice();
         if (selectedPiece >= 0) {
-            UnitTower tower = new UnitTower(this, UnitTower.Type.values()[selectedPiece]);
-            Vector2 towerpos = map.getCenterInGird(selectedTowerX, selectedTowerY);
-            tower.setCenterPosition(towerpos.x, towerpos.y);
+            UnitTower.Type type = UnitTower.Type.values()[selectedPiece];
+            if (type.get(0).price <= money) {
+                money -= type.get(0).price;
+                UnitTower tower = new UnitTower(this, type);
+                Vector2 towerpos = map.getCenterInGird(selectedTowerX, selectedTowerY);
+                tower.setCenterPosition(towerpos.x, towerpos.y);
+            }
         }
     }
 

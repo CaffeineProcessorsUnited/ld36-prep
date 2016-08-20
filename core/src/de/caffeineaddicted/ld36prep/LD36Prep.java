@@ -68,13 +68,13 @@ public class LD36Prep extends SGLGame {
 
     @Override
     public void pause () {
-        theme.pause();
+        if (theme != null) theme.pause();
         rootScreen.pause();
     }
 
     @Override
     public void resume () {
-        theme.play();
+        if (theme != null) theme.play();
         rootScreen.resume();
     }
 

@@ -79,9 +79,10 @@ public class UnitTower extends UnitBase {
     }
 
     public void levelup() {
-        if (level < type.maxlevel()) {
+        if (level < type.maxlevel() && type.get(level + 1).price <= screen.money) {
             level++;
             update();
+            screen.money -= def().price;
         }
     }
 
