@@ -17,6 +17,7 @@ import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.units.*;
 import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -73,5 +74,39 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
+    }
+
+    public void touchDown(int screenX, int sreenY, int pointer, int button){
+
+    }
+
+    public void touchUp(int screenX, int screenY, int pointer, int button){
+        if(button == 1) {
+            placeTower(screenX, screenY);
+        } else {
+            upgradeTower(screenX, screenY);
+        }
+    }
+    public void touchMoved(int screenX, int screenY){
+
+    }
+
+    public void placeTower(int screenX, int screenY){
+        if(!UnitBase.GetUnitsInRect(screenX-16,screenY-16, screenX+16,screenY+16).isEmpty())
+            return;
+        UnitTower tower = new UnitTower(game, UnitTower.Type.FEGGIT1);
+        tower.setCenterPosition(screenX, screenY);
+    }
+
+    public void upgradeTower(int screenX, int screenY){
+        ArrayList<UnitBase> units = UnitBase.GetUnitsInRect(screenX-16,screenY-16, screenX+16,screenY+16);
+        if(units.isEmpty())
+            return;
+        for(UnitBase unit: units){
+            if(unit instanceof UnitTower){
+                UnitTower tower = (UnitTower) unit;
+                tower.levelup();
+            }
+        }
     }
 }

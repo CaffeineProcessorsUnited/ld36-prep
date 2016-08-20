@@ -10,15 +10,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import de.caffeineaddicted.ld36prep.input.InGameInputProcessor;
 import de.caffeineaddicted.ld36prep.messages.FinishedLoadingMessage;
 import de.caffeineaddicted.ld36prep.screens.BackgroundScreen;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.screens.LoadingScreen;
 import de.caffeineaddicted.ld36prep.util.Assets;
 import de.caffeineaddicted.sgl.SGLGame;
+import de.caffeineaddicted.sgl.impl.input.GlobalInputProcessor;
 import de.caffeineaddicted.sgl.impl.messages.DefaultMessage;
 import de.caffeineaddicted.sgl.messages.Message;
 import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
+import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
 
 public class LD36Prep extends SGLGame {
 
@@ -26,6 +29,7 @@ public class LD36Prep extends SGLGame {
     private ShapeRenderer shape;
     private Assets assets;
     private Music theme;
+    private InGameInputProcessor inputProcessor;
 
     @Override
     public void create() {
@@ -40,10 +44,14 @@ public class LD36Prep extends SGLGame {
 	protected void initScreens() {
         rootScreen.loadScreen(new LoadingScreen(this));
         rootScreen.loadScreen(new BackgroundScreen(this));
-        rootScreen.loadScreen(new InGameScreen(this));
+
+        InGameScreen ingamescreen = new InGameScreen(this);
+        rootScreen.loadScreen(ingamescreen);
+        inputProcessor = new InGameInputProcessor(this,ingamescreen);
 
         rootScreen.showScreen(BackgroundScreen.class, SGLRootScreen.ZINDEX.FAREST);
         rootScreen.showScreen(LoadingScreen.class, SGLRootScreen.ZINDEX.FAR);
+        screenInput.addProcessor(ingamescreen,inputProcessor);
 	}
 
     @Override

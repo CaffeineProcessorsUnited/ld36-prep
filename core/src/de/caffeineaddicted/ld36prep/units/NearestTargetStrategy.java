@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class NearestTargetStrategy implements TargetSelectionStrategy {
     @Override
-    public int selectTarget(ArrayList<UnitBase> units, UnitTower me) {
+    public ArrayList<UnitBase> selectTarget(ArrayList<UnitBase> units, UnitTower me) {
         int index = -1;
         int minindex = index;
         float distance = me.def().range + 1;
@@ -22,6 +22,12 @@ public class NearestTargetStrategy implements TargetSelectionStrategy {
                 }
             }
         }
-        return (distance > me.def().range) ? -1 : minindex;
+
+        ArrayList<UnitBase> ret = new ArrayList<UnitBase>();
+
+        if(distance <= me.def().range){
+            ret.add(units.get(minindex));
+        }
+        return ret;
     }
 }
