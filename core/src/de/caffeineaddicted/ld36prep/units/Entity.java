@@ -13,12 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 
+import java.util.ArrayList;
+
 /**
  * @author Malte Heinzelmann
  */
 public abstract class Entity {
     protected InGameScreen screen;
-    protected Drawable drawable;
+    protected ArrayList<Drawable> drawables;
 
     private int width;
     private int height;
@@ -36,6 +38,7 @@ public abstract class Entity {
         this.screen = screen;
         this.center = new Vector2();
         this.centerpoint = new Vector2();
+        this.drawables = new ArrayList<Drawable>();
     }
 
     protected void update() {
@@ -50,24 +53,33 @@ public abstract class Entity {
         centerpoint.set(center.x + getX(), center.y + getY());
     }
 
-    public Entity setTexture(Texture texture) {
-        return setDrawable(new TextureRegionDrawable(new TextureRegion(texture)));
+    public void addTexture(String texture) {
+        addTexture(screen.game.getAssets().get(texture, Texture.class));
     }
 
-    public Entity setDrawable(Drawable drawable) {
-        this.drawable = drawable;
-        return this;
+    public void addTexture(Texture texture) {
+        addDrawable(new TextureRegionDrawable(new TextureRegion(texture)));
+    }
+
+    public void addDrawable(Drawable drawable) {
+        this.drawables.add(drawable);
+    }
+
+    public void clearDrawables() {
+        this.drawables.clear();
     }
 
     public void draw(Batch batch) {
-        if (drawable instanceof TransformDrawable) {
-            if (scaleX != 1 || scaleY != 1 || rotation != 0) {
-                ((TransformDrawable)drawable).draw(batch, x, y, center.x, center.y,
-                        width, height, scaleX, scaleY, rotation);
-                return;
+        for (Drawable drawable : drawables) {
+            if (drawable instanceof TransformDrawable) {
+                if (scaleX != 1 || scaleY != 1 || rotation != 0) {
+                    ((TransformDrawable) drawable).draw(batch, x, y, center.x, center.y,
+                            width, height, scaleX, scaleY, rotation);
+                    return;
+                }
             }
+            if (drawable != null) drawable.draw(batch, x, y, width * scaleX, height * scaleY);
         }
-        if (drawable != null) drawable.draw(batch, x, y, width * scaleX, height * scaleY);
     }
 
     public Vector2 getCenter() {

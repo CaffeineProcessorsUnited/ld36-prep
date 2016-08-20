@@ -2,7 +2,6 @@ package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 
@@ -40,7 +39,9 @@ public class UnitEnemy extends UnitBase {
     }
 
     protected void update() {
-        setTexture(screen.game.getAssets().get(def().file, Texture.class));
+        clearDrawables();
+        addTexture(def().file);
+
         setSize(def().w, def().h);
         setSize(def().w, def().h);
     }

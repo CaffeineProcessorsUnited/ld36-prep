@@ -50,6 +50,10 @@ public class MathUtils {
         return MathUtils.distanceP2P(e1.getCenterPoint().x, e1.getCenterPoint().y, e2.getCenterPoint().x, e2.getCenterPoint().y);
     }
 
+    public static int selectedSlice(float angle, int numSlices) {
+        return (int) (angle / (360.f / numSlices));
+    }
+
     public static int random(int min, int max) {
         return new Random().nextInt((max - min) + 1) + min;
     }

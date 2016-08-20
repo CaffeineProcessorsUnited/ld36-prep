@@ -25,5 +25,9 @@ public class Assets extends AssetManager {
         load("tower2.png", Texture.class);
         load("tower3.png", Texture.class);
         load("projectile.png", Texture.class);
+        load("TowerHUD.png", Texture.class);
+        load("TowerHUD_highlight_0.png", Texture.class);
+        load("TowerHUD_highlight_1.png", Texture.class);
+        load("TowerHUD_highlight_2.png", Texture.class);
     }
 }

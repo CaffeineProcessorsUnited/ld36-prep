@@ -46,7 +46,11 @@ public class InGameInputProcessor implements InputProcessor{
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        screenY = Gdx.graphics.getHeight() - screenY;
+        screen.touchMoved(screenX, screenY);
+        return true;
+    }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {

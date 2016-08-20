@@ -1,6 +1,7 @@
 package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.graphics.Texture;
+import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 
@@ -57,7 +58,8 @@ public class Projectile extends Entity {
     protected void update() {
         super.update();
         setSize(def().w, def().h);
-        setTexture(screen.game.getAssets().get(def().file, Texture.class));
+        clearDrawables();
+        addTexture(def().file);
     }
 
     public Definition def() {
