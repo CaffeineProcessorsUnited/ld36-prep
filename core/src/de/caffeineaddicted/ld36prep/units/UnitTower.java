@@ -1,6 +1,8 @@
 package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ public class UnitTower extends UnitBase {
 
     public final UnitTower.Type type;
     private int level;
+    private float lastShot;
+    private TargetSelectionStrategy targetStrategy;
 
     public static class Definition {
         public final float range;
@@ -31,9 +35,9 @@ public class UnitTower extends UnitBase {
     }
 
     public static enum Type {
-        FEGGIT1(new Definition(300, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower.png")),
-        FEGGIT2(new Definition(300, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower.png")),
-        FEGGIT3(new Definition(300, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower.png"));
+        FEGGIT1(new Definition(10, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower2.png")),
+        FEGGIT2(new Definition(4, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower3.png")),
+        FEGGIT3(new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower1.png"));
 
         private ArrayList<Definition> levels = new ArrayList<Definition>();
 
@@ -56,10 +60,13 @@ public class UnitTower extends UnitBase {
         super(game);
         this.type = type;
         this.level = 0;
+        this.lastShot = def().reload;
+        this.targetStrategy = new NearestTargetStrategy();
         update();
     }
 
     protected void update() {
+        super.update();
         setSize(def().w, def().h);
         setTexture(game.getAssets().get(def().file, Texture.class));
     }
@@ -71,18 +78,32 @@ public class UnitTower extends UnitBase {
     public void levelup() {
         if (level < type.maxlevel()) {
             level++;
+            update();
         }
     }
 
     @Override
-    public void tick(float delta) {
-        ArrayList<UnitBase> unitsInRange = getUnitsInRange(getX(), getY(), def().range);
-        for (UnitBase unit : unitsInRange) {
-            if (unit instanceof UnitEnemy) { //Is Enemy
-                UnitEnemy enemy = (UnitEnemy) unit;
-                Projectile p = new Projectile(game, def().projectile, enemy);
-                p.setPosition(getX(), getY());
-            }
+    public boolean tick(float delta) {
+        lastShot += delta;
+        if (lastShot < (def().reload)) {
+            return false;
         }
+        ArrayList<UnitBase> unitsInRange = getUnitsInRange(getX(), getY(), def().range);
+        ArrayList<UnitBase> selectedUnits = this.targetStrategy.selectTarget(unitsInRange, this);
+
+        if (!selectedUnits.isEmpty()) {
+            for(UnitBase unit:selectedUnits){
+                UnitEnemy enemy = (UnitEnemy) unit;
+                double angleToTarget = MathUtils.angleToPoint(getX(), getY(), enemy.getX(), enemy.getY());
+                setRotation(-(float) angleToTarget);
+                game.debug("in range: " + enemy.type.name());
+                Projectile p = new Projectile(game, def().projectile, enemy);
+                game.debug(getX() + "," + getY() + "," + getWidth() + "," + getHeight() + "," + getCenterPoint().x + "," + getCenterPoint().y);
+                p.setCenterPosition(getCenterPoint().x, getCenterPoint().y);
+                lastShot = 0;
+            }
+
+        }
+        return false;
     }
 }

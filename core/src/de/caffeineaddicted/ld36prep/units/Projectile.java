@@ -1,9 +1,11 @@
 package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Projectile extends Entity {
 
@@ -54,8 +56,9 @@ public class Projectile extends Entity {
     }
 
     protected void update() {
+        super.update();
         setSize(def().w, def().h);
-        setTexture(game.getAssets().get("projectile.png", Texture.class));
+        setTexture(game.getAssets().get(def().file, Texture.class));
     }
 
     public Definition def() {
@@ -68,7 +71,7 @@ public class Projectile extends Entity {
 
     /**
      * @param delta time delta in seconds
-     * @return bool wheather to be destroyed
+     * @return bool whether to be destroyed
      */
     public boolean tick(float delta) {
         if (!target.alive())
@@ -82,6 +85,9 @@ public class Projectile extends Entity {
             diry /= norm;
         }
 
+        double angleToTarget = MathUtils.angleToPoint(getX(), getY(), target.getX(), target.getY());
+        setRotation(-(float) angleToTarget);
+
         translate(delta * def().speed * dirx, delta * def().speed * diry);
 
         if (MathUtils.intersectRect(target.getX(), target.getY(), target.getX() + target.getWidth(), target.getY() + target.getHeight(),
@@ -89,8 +95,6 @@ public class Projectile extends Entity {
             target.receiveDamage(def().damage);
             return true;
         }
-
-        System.out.println("" + getX() + "," + getY());
         return false;
     }
 }
