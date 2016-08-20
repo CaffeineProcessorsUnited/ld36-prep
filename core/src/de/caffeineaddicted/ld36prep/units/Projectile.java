@@ -86,6 +86,7 @@ public class Projectile extends Entity {
         }
 
         double angleToTarget = MathUtils.angleToPoint(getX(), getY(), target.getX(), target.getY());
+        setRotation(-(float) angleToTarget);
 
         translate(delta * def().speed * dirx, delta * def().speed * diry);
 

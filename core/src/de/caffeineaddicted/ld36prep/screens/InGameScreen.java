@@ -41,12 +41,7 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         unit2.translateY(-100);
 
         UnitTower unit3 = new UnitTower(game, UnitTower.Type.FEGGIT3);
-        unit3.translate(200, 300);
-
-        test = new TextureRegionDrawable(new TextureRegion(game.getAssets().get("projectile.png", Texture.class)));
-
-        /*
-        */
+        unit3.translate(300, 300);
 
     }
 

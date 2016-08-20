@@ -36,7 +36,7 @@ public class UnitTower extends UnitBase {
     public static enum Type {
         FEGGIT1(new Definition(10, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower.png")),
         FEGGIT2(new Definition(4, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower.png")),
-        FEGGIT3(new Definition(300, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower.png"));
+        FEGGIT3(new Definition(30, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower.png"));
 
         private ArrayList<Definition> levels = new ArrayList<Definition>();
 
@@ -59,7 +59,7 @@ public class UnitTower extends UnitBase {
         super(game);
         this.type = type;
         this.level = 0;
-        this.lastShot = def().reload * 100;
+        this.lastShot = def().reload;
         update();
     }
 
@@ -85,7 +85,7 @@ public class UnitTower extends UnitBase {
         ArrayList<UnitBase> unitsInRange = getUnitsInRange(getX(), getY(), def().range);
         lastShot += delta;
         for (UnitBase unit : unitsInRange) {
-            if (unit instanceof UnitEnemy && (lastShot >= (def().reload * 100))) { //Is Enemy
+            if (unit instanceof UnitEnemy && (lastShot >= (def().reload))) { //Is Enemy
                 UnitEnemy enemy = (UnitEnemy) unit;
                 game.debug("in range: " + enemy.type.name());
                 Projectile p = new Projectile(game, def().projectile, enemy);
