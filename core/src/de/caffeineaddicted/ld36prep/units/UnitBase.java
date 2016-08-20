@@ -2,6 +2,7 @@ package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ abstract public class UnitBase extends Entity {
         units.remove(this);
     }
 
-    abstract public void tick(float delta);
+    abstract public boolean tick(float delta);
 
     protected ArrayList<UnitBase> GetUnitsInRect(float x1, float y1, float x2, float y2) {
         ArrayList<UnitBase> list = new ArrayList<UnitBase>();

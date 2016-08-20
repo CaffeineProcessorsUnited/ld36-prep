@@ -1,7 +1,7 @@
 package de.caffeineaddicted.ld36prep.units;
 
 public class MathUtils {
-    static public float clamp(float val, float min, float max) {
+    public static float clamp(float val, float min, float max) {
         if (val < min)
             return min;
         else if (val > max)
@@ -9,7 +9,7 @@ public class MathUtils {
         return val;
     }
 
-    static public boolean intersectRect(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+    public static boolean intersectRect(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
         return !(
                 x3 > x2
                         || x4 < x1
@@ -18,7 +18,7 @@ public class MathUtils {
         );
     }
 
-    static public boolean intersectCircleRect(float x1, float y1, float r, float x2, float y2, float x3, float y3) {
+    public static boolean intersectCircleRect(float x1, float y1, float r, float x2, float y2, float x3, float y3) {
         float closestX = clamp(x1, x2, x3);
         float closestY = clamp(y1, y2, y3);
 
@@ -26,5 +26,10 @@ public class MathUtils {
         float distY = y1 - closestY;
         float dist = distX * distX + distY * distY;
         return dist < (r * r);
+    }
+
+    public static double angleToPoint(float x1, float y1, float x2, float y2) {
+        double angle = Math.toDegrees(Math.atan2(x2 - x1, y2 - y1));
+        return (angle < 0) ? angle + 360 : angle;
     }
 }

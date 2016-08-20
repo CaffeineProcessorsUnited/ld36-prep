@@ -2,6 +2,7 @@ package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 
 public class UnitEnemy extends UnitBase {
@@ -48,9 +49,9 @@ public class UnitEnemy extends UnitBase {
     }
 
     @Override
-    public void tick(float delta) {
+    public boolean tick(float delta) {
         if (hp < 0) //Dead
-            return;
+            return true;
 
         delta *= def().speed;
 
@@ -58,6 +59,7 @@ public class UnitEnemy extends UnitBase {
             if (moveDirection(dir, delta))
                 break;
         }
+        return false;
     }
 
     public void receiveDamage(float damage) {
