@@ -7,8 +7,26 @@ import de.caffeineaddicted.ld36prep.util.MathUtils;
  */
 public class MapGenerator {
 
+    public static Map.GroundType[][] genEmpty(int cols, int rows) {
+        Map.GroundType[][] map = new Map.GroundType[cols][rows];
+        int centerRow = (int) Math.floor(rows / 2);
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (c == 0 && r == centerRow) {
+                    map[c][r] = Map.GroundType.START;
+                } else if (c == cols - 1 && r == centerRow) {
+                    map[c][r] = Map.GroundType.FINISH;
+                } else {
+                    map[c][r] = Map.GroundType.PATH;
+                }
+            }
+        }
+        return map;
+    }
 
-
+    /*
+        R.I.P We don't need u anymore :(
+     */
     public static Map.GroundType[][] gen(int cols, int rows) {
         Map.GroundType[][] map = new Map.GroundType[cols][rows];
         int mT = MathUtils.random(0, 2);
@@ -55,7 +73,6 @@ public class MapGenerator {
                 map[c][r] = t;
             }
         }
-
         return map;
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -14,31 +15,33 @@ import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Malte Heinzelmann
  */
 public abstract class Entity {
     protected InGameScreen screen;
-    protected ArrayList<Drawable> drawables;
+    protected Map<String, Drawable> drawables;
 
-    private int width;
-    private int height;
-    private float x;
-    private float y;
-    private float scaleX = 1;
-    private float scaleY = 1;
+    protected int width;
+    protected int height;
+    protected float x;
+    protected float y;
+    protected float scaleX = 1;
+    protected float scaleY = 1;
 
-    private Vector2 center;
-    private Vector2 centerpoint;
+    protected Vector2 center;
+    protected Vector2 centerpoint;
 
-    private float rotation;
+    protected float rotation;
 
     public Entity(InGameScreen screen) {
         this.screen = screen;
         this.center = new Vector2();
         this.centerpoint = new Vector2();
-        this.drawables = new ArrayList<Drawable>();
+        this.drawables = new HashMap<String, Drawable>();
     }
 
     protected void update() {
@@ -54,31 +57,47 @@ public abstract class Entity {
     }
 
     public void addTexture(String texture) {
-        addTexture(screen.game.getAssets().get(texture, Texture.class));
+        addTexture(texture, screen.game.getAssets().get(texture, Texture.class));
     }
 
-    public void addTexture(Texture texture) {
-        addDrawable(new TextureRegionDrawable(new TextureRegion(texture)));
+    public void addTexture(String name, Texture texture) {
+        addDrawable(name, new TextureRegionDrawable(new TextureRegion(texture)));
     }
 
-    public void addDrawable(Drawable drawable) {
-        this.drawables.add(drawable);
+    public void addDrawable(String name, Drawable drawable) {
+        this.drawables.put(name, drawable);
     }
 
     public void clearDrawables() {
         this.drawables.clear();
     }
 
-    public void draw(Batch batch) {
-        for (Drawable drawable : drawables) {
-            if (drawable instanceof TransformDrawable) {
-                if (scaleX != 1 || scaleY != 1 || rotation != 0) {
-                    ((TransformDrawable) drawable).draw(batch, x, y, center.x, center.y,
-                            width, height, scaleX, scaleY, rotation);
-                    return;
-                }
+    public void draw(Batch batch, Drawable drawable, float x, float y, int width, int height, Vector2 center, float scaleX, float scaleY, float rotation) {
+        if (drawable instanceof TransformDrawable) {
+            if (scaleX != 1 || scaleY != 1 || rotation != 0) {
+                ((TransformDrawable) drawable).draw(batch, x, y, center.x, center.y,
+                        width, height, scaleX, scaleY, rotation);
+                return;
             }
-            if (drawable != null) drawable.draw(batch, x, y, width * scaleX, height * scaleY);
+        }
+        if (drawable != null) drawable.draw(batch, x, y, width * scaleX, height * scaleY);
+    }
+
+    public void draw(Batch batch, Drawable drawable, Vector2 pos, int width, int height, float scaleX, float scaleY) {
+        if (drawable != null) drawable.draw(batch, pos.x, pos.y, width * scaleX, height * scaleY);
+    }
+
+    public void draw(Batch batch, Drawable drawable, Vector2 pos, int width, int height, Vector2 center, float scaleX, float scaleY, float rotation) {
+        draw(batch, drawable, pos.x, pos.y, width, height, center, scaleX, scaleY, rotation);
+    }
+
+    public void draw(Batch batch, Drawable drawable) {
+        draw(batch, drawable, x, y, width, height, center, scaleX, scaleY, rotation);
+    }
+
+    public void draw(Batch batch) {
+        for (String key : drawables.keySet()) {
+            draw(batch, drawables.get(key));
         }
     }
 

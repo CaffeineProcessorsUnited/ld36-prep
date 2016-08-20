@@ -29,8 +29,8 @@ import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
 public class LD36Prep extends SGLGame {
     protected static final ApplicationConfiguration applicationConfiguration
             = new ApplicationConfiguration()
-            .set(ApplicationConfiguration.Attribute.WIDTH, 720)
-            .set(ApplicationConfiguration.Attribute.HEIGHT, 720);
+            .set(ApplicationConfiguration.Attribute.WIDTH, 640)
+            .set(ApplicationConfiguration.Attribute.HEIGHT, 640);
 
     private SpriteBatch batch;
     private ShapeRenderer shape;

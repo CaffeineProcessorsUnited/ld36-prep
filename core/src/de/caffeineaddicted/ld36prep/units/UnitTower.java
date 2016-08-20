@@ -37,7 +37,9 @@ public class UnitTower extends UnitBase {
     public static enum Type {
         FEGGIT1(new Definition(10, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower2.png")),
         FEGGIT2(new Definition(4, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower3.png")),
-        FEGGIT3(new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower1.png"));
+        FEGGIT3(new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower1.png"),
+                new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower2.png"),
+                new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower3.png"));
 
         private ArrayList<Definition> levels = new ArrayList<Definition>();
 

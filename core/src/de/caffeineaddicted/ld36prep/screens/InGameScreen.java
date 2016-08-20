@@ -41,7 +41,7 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
     public void create() {
         game.debug("Creating InGameScreen");
-        map = new Map(10, 10, game.getCamera().viewportWidth, game.getCamera().viewportHeight);
+        map = new Map(this, 20, 20, game.getCamera().viewportWidth, game.getCamera().viewportHeight);
 
         UnitEnemy unit1 = new UnitEnemy(this, UnitEnemy.Type.FEGGIT1);
 
@@ -72,6 +72,9 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
         game.getBatch().begin();
         game.getBatch().setColor(new Color(1, 1, 1, 1));
+
+        map.draw(game.getBatch());
+
         for (Projectile projectile : Projectile.activeProjectiles) {
             projectile.draw(game.getBatch());
         }

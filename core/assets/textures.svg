@@ -41,8 +41,8 @@
      id="namedview3904"
      showgrid="false"
      inkscape:zoom="4"
-     inkscape:cx="320.08658"
-     inkscape:cy="188.03811"
+     inkscape:cx="288.17641"
+     inkscape:cy="200.83915"
      inkscape:window-x="1145"
      inkscape:window-y="864"
      inkscape:window-maximized="1"
@@ -343,4 +343,31 @@
       </g>
     </g>
   </g>
+  <rect
+     y="251.20248"
+     x="281.4285"
+     height="32"
+     width="32"
+     id="rect3377"
+     style="fill:#008000"
+     inkscape:export-xdpi="90"
+     inkscape:export-ydpi="90" />
+  <rect
+     inkscape:export-ydpi="90"
+     inkscape:export-xdpi="90"
+     style="fill:#008000"
+     id="rect3399"
+     width="32"
+     height="32"
+     x="321.4285"
+     y="251.20248" />
+  <rect
+     y="251.20248"
+     x="361.4285"
+     height="32"
+     width="32"
+     id="rect3401"
+     style="fill:#00ffff"
+     inkscape:export-xdpi="90"
+     inkscape:export-ydpi="90" />
 </svg>
