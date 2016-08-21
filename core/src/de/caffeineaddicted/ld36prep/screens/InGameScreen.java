@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.input.InGameInputProcessor;
 import de.caffeineaddicted.ld36prep.map.Map;
+import de.caffeineaddicted.ld36prep.map.WaveGenerator;
+import de.caffeineaddicted.ld36prep.map.WaveGeneratorDefer;
 import de.caffeineaddicted.ld36prep.units.*;
 import de.caffeineaddicted.ld36prep.util.Assets;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
@@ -39,6 +41,7 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
     private float waitTimer;
     private float sleepTimer = 1.5f;
+    private WaveGenerator waveGenerator;
 
     public InGameScreen(LD36Prep game) {
         super(game);
@@ -63,17 +66,31 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         font = game.getAssets().get("uiskin.json", Skin.class).getFont("font_droid_sans_28pt_bold");
 
         waitTimer = 0;
+        waveGenerator = new WaveGeneratorDefer(this, map);
+        waveGenerator.setTickDeferTimer(1);
+        waveGenerator.setTickWaitTimer(60);
+        waveGenerator.setCurrentWaitTimer(50);
+        waveGenerator.setMinSpawn(1);
+        waveGenerator.setMaxSpawn(1);
     }
 
     public void render(float delta) {
         if (!isPaused()) {
             waitTimer += delta;
-            if (waitTimer > sleepTimer) {
-                waitTimer -= sleepTimer;
-                UnitEnemy enemy = new UnitEnemy(this, UnitEnemy.Type.values()[MathUtils.random(0, UnitEnemy.Type.values().length - 1)]);
-                enemy.translate(map.gridToPos(MathUtils.random(-10, 10), 8));
+            waveGenerator.setMaxSpawn(waveGenerator.getWaveCount());
+            waveGenerator.tick(delta);
 
-                sleepTimer = Math.max(0.8f, sleepTimer * 0.995f);
+            int alive = 0;
+            for (UnitBase unit : UnitBase.units) {
+                if (unit instanceof UnitEnemy) {
+                    UnitEnemy enemy = (UnitEnemy) unit;
+                    if (enemy.alive())
+                        alive++;
+                }
+            }
+            game.warning("" + alive);
+            if (alive == 0) {
+                waveGenerator.skipToNextWave();
             }
 
             for (UnitBase unit : UnitBase.units) {
@@ -109,6 +126,8 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
         font.draw(game.getBatch(), "Money: " + money, 10, game.getCamera().viewportHeight - 10);
         font.draw(game.getBatch(), "Score:" + score, 10, game.getCamera().viewportHeight - font.getCapHeight() - 20);
+        font.draw(game.getBatch(), "Current wave:" + waveGenerator.getWaveCount(), 10, game.getCamera().viewportHeight - 2 * font.getCapHeight() - 30);
+        font.draw(game.getBatch(), "Time to next wave:" + (int) waveGenerator.getRemainingTime(), 10, game.getCamera().viewportHeight - 3 * font.getCapHeight() - 40);
 
         game.getBatch().end();
 
@@ -162,19 +181,21 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     }
 
     public void placeTower(int screenX, int screenY){
-        Vector2 pos = map.posToGrid(selectedTowerX, selectedTowerY);
-        Vector2 posnext = map.gridToPos(pos.x + 1, pos.y + 1);
-        if (!UnitBase.GetUnitsInRect(selectedTowerX + 1, selectedTowerY + 1, posnext.x - 1, posnext.y - 1).isEmpty())
-            return;
+        if (MathUtils.distanceP2P(screenX, screenY, selectedTowerX, selectedTowerY) > towerSelectionHUD.getWidth() * 0.5) {
+            Vector2 pos = map.posToGrid(selectedTowerX, selectedTowerY);
+            Vector2 posnext = map.gridToPos(pos.x + 1, pos.y + 1);
+            if (!UnitBase.GetUnitsInRect(selectedTowerX + 1, selectedTowerY + 1, posnext.x - 1, posnext.y - 1).isEmpty())
+                return;
 
-        int selectedPiece = towerSelectionHUD.getSelectedSlice();
-        if (selectedPiece >= 0) {
-            UnitTower.Type type = UnitTower.Type.values()[selectedPiece];
-            if (type.get(0).price <= money) {
-                money -= type.get(0).price;
-                UnitTower tower = new UnitTower(this, type);
-                Vector2 towerpos = map.getCenterInGird(selectedTowerX, selectedTowerY);
-                tower.setCenterPosition(towerpos.x, towerpos.y);
+            int selectedPiece = towerSelectionHUD.getSelectedSlice();
+            if (selectedPiece >= 0) {
+                UnitTower.Type type = UnitTower.Type.values()[selectedPiece];
+                if (type.get(0).price <= money) {
+                    money -= type.get(0).price;
+                    UnitTower tower = new UnitTower(this, type);
+                    Vector2 towerpos = map.getCenterInGird(selectedTowerX, selectedTowerY);
+                    tower.setCenterPosition(towerpos.x, towerpos.y);
+                }
             }
         }
     }

@@ -33,6 +33,10 @@ public class UnitEnemy extends UnitBase {
             this.h = h;
             this.file = file;
         }
+
+        public static Type getRandom() {
+            return values()[MathUtils.random(0, values().length - 1)];
+        }
     }
 
     public UnitEnemy(InGameScreen screen, UnitEnemy.Type type) {
