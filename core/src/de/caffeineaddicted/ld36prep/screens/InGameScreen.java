@@ -88,7 +88,7 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
                         alive++;
                 }
             }
-            game.warning("" + alive);
+            //game.warning("" + alive);
             if (alive == 0) {
                 waveGenerator.skipToNextWave();
             }
@@ -169,9 +169,9 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     public void touchMoved(int screenX, int screenY){
         currentMouseX = screenX;
         currentMouseY = screenY;
-        Vector2 pos = map.getCenterInGird(selectedTowerX, selectedTowerY);
+        Vector2 center = map.getCenterInGird(selectedTowerX, selectedTowerY);
 
-        float angle = (float) MathUtils.angleToPoint(pos.x, pos.y, screenX, screenY);
+        float angle = (float) MathUtils.angleToPoint(center.x, center.y, screenX, screenY);
         int slice = MathUtils.selectedSlice(angle, UnitTower.Type.values().length);
         towerSelectionHUD.setSelectedSlice(slice);
     }
@@ -181,7 +181,8 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     }
 
     public void placeTower(int screenX, int screenY){
-        if (MathUtils.distanceP2P(screenX, screenY, selectedTowerX, selectedTowerY) > towerSelectionHUD.getWidth() * 0.5) {
+        Vector2 center = map.getCenterInGird(selectedTowerX, selectedTowerY);
+        if (MathUtils.distanceP2P(screenX, screenY, center.x, center.y) > towerSelectionHUD.getWidth() * 0.5) {
             Vector2 pos = map.posToGrid(selectedTowerX, selectedTowerY);
             Vector2 posnext = map.gridToPos(pos.x + 1, pos.y + 1);
             if (!UnitBase.GetUnitsInRect(selectedTowerX + 1, selectedTowerY + 1, posnext.x - 1, posnext.y - 1).isEmpty())
