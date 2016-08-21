@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.utils.viewport.*;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import de.caffeineaddicted.ld36prep.input.GlobalInputProcessor;
 import de.caffeineaddicted.ld36prep.input.InGameInputProcessor;
 import de.caffeineaddicted.ld36prep.messages.ExitGameMessage;
 import de.caffeineaddicted.ld36prep.messages.FinishedLoadingMessage;
-import de.caffeineaddicted.ld36prep.messages.TogglePauseGameMessage;
 import de.caffeineaddicted.ld36prep.messages.ToggleFullscreenMessage;
+import de.caffeineaddicted.ld36prep.messages.TogglePauseGameMessage;
 import de.caffeineaddicted.ld36prep.screens.BackgroundScreen;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.screens.LoadingScreen;
@@ -41,6 +42,13 @@ public class LD36Prep extends SGLGame {
     private InGameInputProcessor inputProcessor;
     private boolean paused;
 
+    public static final ApplicationConfiguration getConfig() {
+        if (applicationConfiguration == null) {
+            throw new RuntimeException("Provide a configuration!");
+        }
+        return applicationConfiguration;
+    }
+
     @Override
     public void create() {
         Gdx.app.setLogLevel(Gdx.app.LOG_DEBUG);
@@ -56,8 +64,8 @@ public class LD36Prep extends SGLGame {
         super.create();
     }
 
-	@Override
-	protected void initScreens() {
+    @Override
+    protected void initScreens() {
         rootScreen.loadScreen(new LoadingScreen(this));
         rootScreen.loadScreen(new BackgroundScreen(this));
 
@@ -65,24 +73,24 @@ public class LD36Prep extends SGLGame {
 
         rootScreen.showScreen(BackgroundScreen.class, SGLRootScreen.ZINDEX.FAREST);
         rootScreen.showScreen(LoadingScreen.class, SGLRootScreen.ZINDEX.FAR);
-	}
+    }
 
     @Override
-    public void pause () {
+    public void pause() {
         paused = true;
         if (theme != null) theme.pause();
         rootScreen.pause();
     }
 
     @Override
-    public void resume () {
+    public void resume() {
         paused = false;
         if (theme != null) theme.play();
         rootScreen.resume();
     }
 
     @Override
-    public void resize (int width, int height) {
+    public void resize(int width, int height) {
         camera.viewportWidth = width;
         camera.viewportHeight = height;
         camera.update();
@@ -93,8 +101,8 @@ public class LD36Prep extends SGLGame {
         return new ScreenViewport(getCamera());
     }
 
-	@Override
-	public void message(Message message) {
+    @Override
+    public void message(Message message) {
         if (message == null) {
             message = new DefaultMessage();
         }
@@ -132,16 +140,17 @@ public class LD36Prep extends SGLGame {
             Gdx.app.exit();
         }
         log(message.getClass().getSimpleName());
-	}
+    }
 
-	public SGLScreenInputMultiplexer getScreenInput() {
-	    return screenInput;
+    public SGLScreenInputMultiplexer getScreenInput() {
+        return screenInput;
     }
 
     @Override
-	public String getLogTag(String sub) {
-		return "LD36 " + (!sub.isEmpty() ? ":" + sub : "");
-	}
+    public String getLogTag(String sub) {
+        return "LD36 " + (!sub.isEmpty() ? ":" + sub : "");
+    }
+
     public SpriteBatch getBatch() {
         return batch;
     }
@@ -156,13 +165,6 @@ public class LD36Prep extends SGLGame {
 
     public Camera getCamera() {
         return camera;
-    }
-
-    public static final ApplicationConfiguration getConfig() {
-        if (applicationConfiguration == null) {
-            throw new RuntimeException("Provide a configuration!");
-        }
-        return applicationConfiguration;
     }
 
     public Matrix4 getIdMatrix() {

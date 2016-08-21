@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Matrix4;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
 
@@ -21,12 +20,12 @@ public class BackgroundScreen extends SGLScreen<LD36Prep> {
         super(game);
     }
 
-    public void setDimmBackground(boolean dimmBackground) {
-        this.dimmBackground = dimmBackground;
-    }
-
     public boolean getDimmBackground() {
         return dimmBackground;
+    }
+
+    public void setDimmBackground(boolean dimmBackground) {
+        this.dimmBackground = dimmBackground;
     }
 
     public void create() {

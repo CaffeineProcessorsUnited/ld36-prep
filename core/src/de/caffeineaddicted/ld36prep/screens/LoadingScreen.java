@@ -1,12 +1,9 @@
 package de.caffeineaddicted.ld36prep.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Rectangle;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.messages.FinishedLoadingMessage;
 import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
@@ -54,14 +51,14 @@ public class LoadingScreen extends SGLScreen<LD36Prep> {
         cpu = new Sprite(texCPU);
         float cw = cpu.getWidth();
         float ch = cpu.getHeight();
-        float cs = Math.max(Gdx.graphics.getWidth()/(3*cw), Gdx.graphics.getHeight()/(3*ch));
+        float cs = Math.max(Gdx.graphics.getWidth() / (3 * cw), Gdx.graphics.getHeight() / (3 * ch));
         cpu.setSize(cpu.getWidth() * cs, cpu.getHeight() * cs);
 
         Texture texLogo = game.getAssets().get("logo.png", Texture.class);
         logo = new Sprite(texLogo);
         float fw = logo.getWidth();
         float fh = logo.getHeight();
-        float fs = Math.max(Gdx.graphics.getWidth()/(1.5f*fw), Gdx.graphics.getHeight()/(1.5f*fw));
+        float fs = Math.max(Gdx.graphics.getWidth() / (1.5f * fw), Gdx.graphics.getHeight() / (1.5f * fw));
         logo.setSize(logo.getWidth() * fs, logo.getHeight() * fs);
 
         game.getAssets().load();

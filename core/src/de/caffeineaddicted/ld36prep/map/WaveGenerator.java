@@ -11,19 +11,12 @@ import static sun.swing.MenuItemLayoutHelper.max;
 abstract public class WaveGenerator {
     protected Map map;
     protected InGameScreen screen;
+    protected int remainingSpawns;
     private int minSpawn;
     private int maxSpawn;
     private int waveCount;
-
-    protected int remainingSpawns;
     private float tickWaitTimer, currentWaitTimer;
     private float tickDeferTimer, currentDeferTimer;
-
-    private enum State {
-        NEXTWAVE,
-        DEFER
-    }
-
     private State state;
 
     public WaveGenerator(InGameScreen screen, Map map) {
@@ -64,12 +57,12 @@ abstract public class WaveGenerator {
         return minSpawn;
     }
 
-    public int getMaxSpawn() {
-        return max(minSpawn, maxSpawn);
-    }
-
     public void setMinSpawn(int minSpawn) {
         this.minSpawn = minSpawn;
+    }
+
+    public int getMaxSpawn() {
+        return max(minSpawn, maxSpawn);
     }
 
     public void setMaxSpawn(int maxSpawn) {
@@ -123,5 +116,10 @@ abstract public class WaveGenerator {
         if (state == State.NEXTWAVE) {
             setCurrentWaitTimer(Math.max(getCurrentWaitTimer(), getTickWaitTimer() - 10));
         }
+    }
+
+    private enum State {
+        NEXTWAVE,
+        DEFER
     }
 }

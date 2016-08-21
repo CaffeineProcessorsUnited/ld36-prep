@@ -27,7 +27,7 @@ public class NearestTargetStrategy implements TargetSelectionStrategy {
 
         ArrayList<UnitBase> ret = new ArrayList<UnitBase>();
 
-        if(distance <= me.unitToPixel(me.def().range)){
+        if (distance <= me.unitToPixel(me.def().range)) {
             ret.add(units.get(minindex));
         }
         return ret;

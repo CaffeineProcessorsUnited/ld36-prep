@@ -1,9 +1,6 @@
 package de.caffeineaddicted.ld36prep.screens;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.units.Entity;
 
 /**
@@ -25,13 +22,13 @@ public class TowerSelectionHUD extends Entity {
         setSize(64, 64);
     }
 
+    public int getSelectedSlice() {
+        return selectedSlice;
+    }
+
     public void setSelectedSlice(int selectedSlice) {
         this.selectedSlice = selectedSlice;
         update();
-    }
-
-    public int getSelectedSlice() {
-        return selectedSlice;
     }
 
     @Override

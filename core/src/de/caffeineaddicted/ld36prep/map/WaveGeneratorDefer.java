@@ -3,7 +3,6 @@ package de.caffeineaddicted.ld36prep.map;
 import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.units.UnitEnemy;
-import de.caffeineaddicted.ld36prep.util.MathUtils;
 
 /**
  * Created by Niels on 21.08.2016.

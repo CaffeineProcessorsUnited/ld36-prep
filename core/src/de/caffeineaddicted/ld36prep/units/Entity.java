@@ -2,20 +2,13 @@ package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
-import de.caffeineaddicted.ld36prep.LD36Prep;
-import de.caffeineaddicted.ld36prep.map.Map;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -193,7 +186,7 @@ public abstract class Entity {
         return rotation;
     }
 
-    public Entity setRotation (float degrees) {
+    public Entity setRotation(float degrees) {
         if (rotation != degrees) {
             rotation = degrees;
         }

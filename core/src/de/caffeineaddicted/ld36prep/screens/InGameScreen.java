@@ -14,8 +14,10 @@ import de.caffeineaddicted.ld36prep.input.InGameInputProcessor;
 import de.caffeineaddicted.ld36prep.map.Map;
 import de.caffeineaddicted.ld36prep.map.WaveGenerator;
 import de.caffeineaddicted.ld36prep.map.WaveGeneratorDefer;
-import de.caffeineaddicted.ld36prep.units.*;
-import de.caffeineaddicted.ld36prep.util.Assets;
+import de.caffeineaddicted.ld36prep.units.Projectile;
+import de.caffeineaddicted.ld36prep.units.UnitBase;
+import de.caffeineaddicted.ld36prep.units.UnitEnemy;
+import de.caffeineaddicted.ld36prep.units.UnitTower;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
 
@@ -27,18 +29,16 @@ import java.util.Iterator;
  */
 public class InGameScreen extends SGLScreen<LD36Prep> {
 
-    private Stage stage;
+    public int money = 500;
+    public int score = 0;
     Drawable test;
+    private Stage stage;
     private float selectedTowerX, selectedTowerY;
     private float currentMouseX, currentMouseY;
     private boolean showPlacementHUD;
     private TowerSelectionHUD towerSelectionHUD;
     private Map map;
     private BitmapFont font;
-
-    public int money = 500;
-    public int score = 0;
-
     private float waitTimer;
     private float sleepTimer = 1.5f;
     private WaveGenerator waveGenerator;
@@ -157,8 +157,8 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         }
     }
 
-    public void touchUp(int screenX, int screenY, int pointer, int button){
-        if(button == 1) {
+    public void touchUp(int screenX, int screenY, int pointer, int button) {
+        if (button == 1) {
             placeTower(screenX, screenY);
             showPlacementHUD = false;
         } else {
@@ -166,7 +166,7 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         }
     }
 
-    public void touchMoved(int screenX, int screenY){
+    public void touchMoved(int screenX, int screenY) {
         currentMouseX = screenX;
         currentMouseY = screenY;
         Vector2 center = map.getCenterInGird(selectedTowerX, selectedTowerY);
@@ -176,11 +176,11 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         towerSelectionHUD.setSelectedSlice(slice);
     }
 
-    public void mouseMoved(int screenX, int screenY){
+    public void mouseMoved(int screenX, int screenY) {
         map.setHovered(screenX, screenY);
     }
 
-    public void placeTower(int screenX, int screenY){
+    public void placeTower(int screenX, int screenY) {
         Vector2 center = map.getCenterInGird(selectedTowerX, selectedTowerY);
         if (MathUtils.distanceP2P(screenX, screenY, center.x, center.y) > towerSelectionHUD.getWidth() * 0.5) {
             Vector2 pos = map.posToGrid(selectedTowerX, selectedTowerY);
@@ -201,15 +201,15 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         }
     }
 
-    public void upgradeTower(int screenX, int screenY){
+    public void upgradeTower(int screenX, int screenY) {
         Vector2 p = map.posToGrid(screenX, screenY);
         Vector2 pos = map.gridToPos(p);
         Vector2 posnext = map.gridToPos(p.x + 1, p.y + 1);
         ArrayList<UnitBase> units = UnitBase.GetUnitsInRect(pos.x + 1, pos.y + 1, posnext.x - 1, posnext.y - 1);
-        if(units.isEmpty())
+        if (units.isEmpty())
             return;
-        for(UnitBase unit: units){
-            if(unit instanceof UnitTower){
+        for (UnitBase unit : units) {
+            if (unit instanceof UnitTower) {
                 UnitTower tower = (UnitTower) unit;
                 tower.levelup();
             }
@@ -221,7 +221,7 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     }
 
     @Override
-    public void resize (int width, int height) {
+    public void resize(int width, int height) {
         map.resize(game.getCamera().viewportWidth, game.getCamera().viewportHeight);
     }
 

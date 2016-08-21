@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.units.Entity;
-import de.caffeineaddicted.ld36prep.units.UnitBase;
-import de.caffeineaddicted.ld36prep.units.UnitTower;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 
 /**
@@ -13,18 +11,14 @@ import de.caffeineaddicted.ld36prep.util.MathUtils;
  */
 public class Map extends Entity {
 
-    public enum GroundType {
-        PATH, TOWER, START, FINISH
-    }
     private final int cols;
     private final int rows;
+    public boolean renderGrid = true;
     private int gridWidth;
     private int gridHeight;
-    public boolean renderGrid = true;
     private GroundType[][] map;
     private float oneUnit;
     private Vector2 center;
-
     private int selectX = -1;
     private int selectY = -1;
     private int hoverX = -1;
@@ -162,6 +156,10 @@ public class Map extends Entity {
                 }
             }
         }
+    }
+
+    public enum GroundType {
+        PATH, TOWER, START, FINISH
     }
 
 }

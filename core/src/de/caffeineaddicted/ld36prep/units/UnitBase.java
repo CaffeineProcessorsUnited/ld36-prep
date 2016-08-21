@@ -1,31 +1,17 @@
 package de.caffeineaddicted.ld36prep.units;
 
-import com.badlogic.gdx.Gdx;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 
 import java.util.ArrayList;
 
 abstract public class UnitBase extends Entity {
-    protected enum DIRECTION {
-        SOUTH,
-        EAST,
-        WEST,
-        NORTH
-    }
-
     public static ArrayList<UnitBase> units = new ArrayList<UnitBase>();
 
     public UnitBase(InGameScreen screen) {
         super(screen);
         units.add(this);
     }
-
-    public void destroy() {
-        units.remove(this);
-    }
-
-    abstract public boolean tick(float delta);
 
     public static ArrayList<UnitBase> GetUnitsInRect(float x1, float y1, float x2, float y2) {
         ArrayList<UnitBase> list = new ArrayList<UnitBase>();
@@ -50,5 +36,18 @@ abstract public class UnitBase extends Entity {
             }
         }
         return list;
+    }
+
+    public void destroy() {
+        units.remove(this);
+    }
+
+    abstract public boolean tick(float delta);
+
+    protected enum DIRECTION {
+        SOUTH,
+        EAST,
+        WEST,
+        NORTH
     }
 }

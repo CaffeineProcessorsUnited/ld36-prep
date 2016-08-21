@@ -1,8 +1,6 @@
 package de.caffeineaddicted.ld36prep.units;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 
@@ -12,32 +10,6 @@ public class UnitEnemy extends UnitBase {
 
     public final UnitEnemy.Type type;
     private float hp;
-
-    public static enum Type {
-        FEGGIT1(10, 0.5f, 100, 32, 32, "enemy.png"),
-        FEGGIT2(20, 0.25f, 200, 32, 32, "enemy.png"),
-        FEGGIT3(100, 0.1f, 300, 32, 32, "enemy.png");
-
-        public final float hp;
-        public final float speed;
-        public final int points;
-        public final int w;
-        public final int h;
-        public final String file;
-
-        Type(float hp, float speed, int points, int w, int h, String file) {
-            this.hp = hp;
-            this.speed = speed;
-            this.points = points;
-            this.w = w;
-            this.h = h;
-            this.file = file;
-        }
-
-        public static Type getRandom() {
-            return values()[MathUtils.random(0, values().length - 1)];
-        }
-    }
 
     public UnitEnemy(InGameScreen screen, UnitEnemy.Type type) {
         super(screen);
@@ -126,5 +98,31 @@ public class UnitEnemy extends UnitBase {
         }
         setPosition(nx, ny);
         return true;
+    }
+
+    public static enum Type {
+        FEGGIT1(10, 0.5f, 100, 32, 32, "enemy.png"),
+        FEGGIT2(20, 0.25f, 200, 32, 32, "enemy.png"),
+        FEGGIT3(100, 0.1f, 300, 32, 32, "enemy.png");
+
+        public final float hp;
+        public final float speed;
+        public final int points;
+        public final int w;
+        public final int h;
+        public final String file;
+
+        Type(float hp, float speed, int points, int w, int h, String file) {
+            this.hp = hp;
+            this.speed = speed;
+            this.points = points;
+            this.w = w;
+            this.h = h;
+            this.file = file;
+        }
+
+        public static Type getRandom() {
+            return values()[MathUtils.random(0, values().length - 1)];
+        }
     }
 }

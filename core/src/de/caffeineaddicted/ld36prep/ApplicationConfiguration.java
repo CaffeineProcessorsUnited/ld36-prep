@@ -7,31 +7,13 @@ import java.util.Map;
  * @author Malte Heinzelmann
  */
 public class ApplicationConfiguration {
-    public enum Attribute {
-        WIDTH(Integer.class),
-        HEIGHT(Integer.class),
-        ;
-
-        public final Class type;
-        public final String name;
-
-        Attribute(Class type) {
-            this.type = type;
-            this.name = name().toLowerCase();
-        }
-
-        Attribute(Class type, String name) {
-            this.type = type;
-            this.name = name;
-        }
-    }
     protected final Map<Attribute, Object> attributes = new HashMap<Attribute, Object>();
 
     public ApplicationConfiguration() {
     }
 
     public ApplicationConfiguration(ApplicationConfiguration configuration) {
-        for (Attribute a: configuration.attributes.keySet()) {
+        for (Attribute a : configuration.attributes.keySet()) {
             attributes.put(a, configuration.get(a));
         }
     }
@@ -47,5 +29,23 @@ public class ApplicationConfiguration {
     public <T> ApplicationConfiguration set(Attribute attribute, T value) {
         attributes.put(attribute, value);
         return this;
+    }
+
+    public enum Attribute {
+        WIDTH(Integer.class),
+        HEIGHT(Integer.class),;
+
+        public final Class type;
+        public final String name;
+
+        Attribute(Class type) {
+            this.type = type;
+            this.name = name().toLowerCase();
+        }
+
+        Attribute(Class type, String name) {
+            this.type = type;
+            this.name = name;
+        }
     }
 }

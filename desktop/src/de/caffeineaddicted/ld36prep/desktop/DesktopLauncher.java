@@ -6,11 +6,11 @@ import de.caffeineaddicted.ld36prep.ApplicationConfiguration;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 
 public class DesktopLauncher {
-	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+    public static void main(String[] arg) {
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = LD36Prep.getConfig().get(ApplicationConfiguration.Attribute.WIDTH);
         config.height = LD36Prep.getConfig().get(ApplicationConfiguration.Attribute.HEIGHT);
         config.resizable = false;
-		new LwjglApplication(new LD36Prep(), config);
-	}
+        new LwjglApplication(new LD36Prep(), config);
+    }
 }

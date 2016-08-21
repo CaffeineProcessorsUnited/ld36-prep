@@ -1,7 +1,5 @@
 package de.caffeineaddicted.ld36prep.units;
 
-import com.badlogic.gdx.graphics.Texture;
-import de.caffeineaddicted.ld36prep.LD36Prep;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 
@@ -9,39 +7,9 @@ import java.util.ArrayList;
 
 public class Projectile extends Entity {
 
+    public static ArrayList<Projectile> activeProjectiles = new ArrayList<Projectile>();
     public final Projectile.Type type;
     private UnitEnemy target;
-    public static ArrayList<Projectile> activeProjectiles = new ArrayList<Projectile>();
-
-    public static class Definition {
-        public final float range;
-        public final float damage;
-        public final float speed;
-        public final int w;
-        public final int h;
-        public final String file;
-
-        Definition(float range, float damage, float speed, int w, int h, String file) {
-            this.range = range;
-            this.damage = damage;
-            this.speed = speed;
-            this.w = w;
-            this.h = h;
-            this.file = file;
-        }
-    }
-
-    public static enum Type {
-        FEGGIT1(new Definition(0, 5, 10, 16, 16, "projectile.png")),
-        FEGGIT2(new Definition(1, 20, 10, 16, 16, "projectile.png")),
-        FEGGIT3(new Definition(0, 1, 10, 16, 16, "projectile.png"));
-
-        public final Definition defintion;
-
-        Type(Definition defintion) {
-            this.defintion = defintion;
-        }
-    }
 
     public Projectile(InGameScreen screen, Projectile.Type type) {
         this(screen, type, null);
@@ -97,5 +65,35 @@ public class Projectile extends Entity {
             return true;
         }
         return false;
+    }
+
+    public static enum Type {
+        FEGGIT1(new Definition(0, 5, 10, 16, 16, "projectile.png")),
+        FEGGIT2(new Definition(1, 20, 10, 16, 16, "projectile.png")),
+        FEGGIT3(new Definition(0, 1, 10, 16, 16, "projectile.png"));
+
+        public final Definition defintion;
+
+        Type(Definition defintion) {
+            this.defintion = defintion;
+        }
+    }
+
+    public static class Definition {
+        public final float range;
+        public final float damage;
+        public final float speed;
+        public final int w;
+        public final int h;
+        public final String file;
+
+        Definition(float range, float damage, float speed, int w, int h, String file) {
+            this.range = range;
+            this.damage = damage;
+            this.speed = speed;
+            this.w = w;
+            this.h = h;
+            this.file = file;
+        }
     }
 }

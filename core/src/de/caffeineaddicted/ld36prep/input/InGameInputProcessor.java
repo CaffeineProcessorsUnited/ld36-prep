@@ -12,7 +12,7 @@ import de.caffeineaddicted.sgl.input.SGLInputProcessor;
 public class InGameInputProcessor extends SGLInputProcessor {
     private InGameScreen screen;
 
-    public InGameInputProcessor(InGameScreen screen){
+    public InGameInputProcessor(InGameScreen screen) {
         this.screen = screen;
     }
 
