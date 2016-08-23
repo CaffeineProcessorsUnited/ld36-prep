@@ -5,5 +5,5 @@ import de.caffeineaddicted.sgl.messages.Message;
 /**
  * @author Malte Heinzelmann
  */
-public class ToggleFullscreenMessage implements Message {
+public class ToggleFullscreenMessage extends Message {
 }

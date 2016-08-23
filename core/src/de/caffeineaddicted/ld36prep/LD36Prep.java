@@ -25,13 +25,9 @@ import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
 import de.caffeineaddicted.sgl.messages.Message;
 import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
 import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
+import de.caffeineaddicted.sgl.ApplicationConfiguration;
 
 public class LD36Prep extends SGLGame {
-
-    protected static final ApplicationConfiguration applicationConfiguration
-            = new ApplicationConfiguration()
-            .set(ApplicationConfiguration.Attribute.WIDTH, 1280)
-            .set(ApplicationConfiguration.Attribute.HEIGHT, 720);
 
     private SpriteBatch batch;
     private ShapeRenderer shape;
@@ -42,11 +38,9 @@ public class LD36Prep extends SGLGame {
     private InGameInputProcessor inputProcessor;
     private boolean paused;
 
-    public static final ApplicationConfiguration getConfig() {
-        if (applicationConfiguration == null) {
-            throw new RuntimeException("Provide a configuration!");
-        }
-        return applicationConfiguration;
+    @Override
+    public void startGame() {
+
     }
 
     @Override
@@ -65,28 +59,33 @@ public class LD36Prep extends SGLGame {
     }
 
     @Override
+    protected void initGame() {
+
+    }
+
+    @Override
     protected void initScreens() {
-        rootScreen.loadScreen(new LoadingScreen(this));
-        rootScreen.loadScreen(new BackgroundScreen(this));
+        provide(SGLRootScreen.class).loadScreen(new LoadingScreen(this));
+        provide(SGLRootScreen.class).loadScreen(new BackgroundScreen(this));
 
-        rootScreen.loadScreen(new InGameScreen(this));
+        provide(SGLRootScreen.class).loadScreen(new InGameScreen(this));
 
-        rootScreen.showScreen(BackgroundScreen.class, SGLRootScreen.ZINDEX.FAREST);
-        rootScreen.showScreen(LoadingScreen.class, SGLRootScreen.ZINDEX.FAR);
+        provide(SGLRootScreen.class).showScreen(BackgroundScreen.class, SGLRootScreen.ZINDEX.FAREST);
+        provide(SGLRootScreen.class).showScreen(LoadingScreen.class, SGLRootScreen.ZINDEX.FAR);
     }
 
     @Override
     public void pause() {
         paused = true;
         if (theme != null) theme.pause();
-        rootScreen.pause();
+        provide(SGLRootScreen.class).pause();
     }
 
     @Override
     public void resume() {
         paused = false;
         if (theme != null) theme.play();
-        rootScreen.resume();
+        provide(SGLRootScreen.class).resume();
     }
 
     @Override
@@ -110,24 +109,24 @@ public class LD36Prep extends SGLGame {
             debug("Received message after finishing loading assets");
             theme = getAssets().get("theme.ogg", Music.class);
             theme.setLooping(true);
-            if (paused)
+            if (!paused)
                 theme.play();
             //message(new ShowMainMenuMessage());
-            rootScreen.hideScreen(LoadingScreen.class);
-            rootScreen.showScreen(InGameScreen.class, SGLRootScreen.ZINDEX.NEAR);
+            provide(SGLRootScreen.class).hideScreen(LoadingScreen.class);
+            provide(SGLRootScreen.class).showScreen(InGameScreen.class, SGLRootScreen.ZINDEX.NEAR);
         }
         if (message.getClass() == ToggleFullscreenMessage.class) {
             if (Gdx.graphics.isFullscreen()) {
                 Gdx.graphics.setWindowedMode(
-                        LD36Prep.getConfig().get(ApplicationConfiguration.Attribute.WIDTH, Integer.class),
-                        LD36Prep.getConfig().get(ApplicationConfiguration.Attribute.HEIGHT, Integer.class)
+                        this.config().get(ApplicationConfiguration.Attribute.WIDTH, Integer.class),
+                        this.config().get(ApplicationConfiguration.Attribute.HEIGHT, Integer.class)
                 );
             } else {
                 Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
             }
         }
         if (message.getClass() == TogglePauseGameMessage.class) {
-            SGLScreen screen = rootScreen.get(InGameScreen.class);
+            SGLScreen screen = provide(SGLRootScreen.class).get(InGameScreen.class);
             if (screen.isPaused()) {
                 theme.play();
                 screen.resume();
@@ -142,13 +141,15 @@ public class LD36Prep extends SGLGame {
         log(message.getClass().getSimpleName());
     }
 
-    public SGLScreenInputMultiplexer getScreenInput() {
-        return screenInput;
+    public ApplicationConfiguration config() {
+        return new ApplicationConfiguration()
+                .set(ApplicationConfiguration.Attribute.WIDTH, 1280)
+                .set(ApplicationConfiguration.Attribute.HEIGHT, 720);
     }
 
     @Override
     public String getLogTag(String sub) {
-        return "LD36 " + (!sub.isEmpty() ? ":" + sub : "");
+        return "LD36" + (!sub.isEmpty() ? ":" + sub : "");
     }
 
     public SpriteBatch getBatch() {

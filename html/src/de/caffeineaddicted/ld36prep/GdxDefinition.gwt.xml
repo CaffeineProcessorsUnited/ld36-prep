@@ -5,6 +5,7 @@
     <inherits name='com.badlogic.gdx.backends.gdx_backends_gwt'/>
 
     <inherits name='LD36Prep'/>
+    <inherits name='SGL'/>
     <entry-point class='de.caffeineaddicted.ld36prep.client.HtmlLauncher'/>
 
     <set-configuration-property name="gdx.assetpath" value="../core/assets"/>

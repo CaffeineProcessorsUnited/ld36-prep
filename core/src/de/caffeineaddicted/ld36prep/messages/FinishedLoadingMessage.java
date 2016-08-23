@@ -5,5 +5,5 @@ import de.caffeineaddicted.sgl.messages.Message;
 /**
  * @author Malte Heinzelmann
  */
-public class FinishedLoadingMessage implements Message {
+public class FinishedLoadingMessage extends Message {
 }

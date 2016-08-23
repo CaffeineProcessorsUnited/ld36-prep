@@ -2,15 +2,16 @@ package de.caffeineaddicted.ld36prep.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import de.caffeineaddicted.ld36prep.ApplicationConfiguration;
+import de.caffeineaddicted.sgl.ApplicationConfiguration;
 import de.caffeineaddicted.ld36prep.LD36Prep;
 
 public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.width = LD36Prep.getConfig().get(ApplicationConfiguration.Attribute.WIDTH);
-        config.height = LD36Prep.getConfig().get(ApplicationConfiguration.Attribute.HEIGHT);
+        LD36Prep game = new LD36Prep();
+        config.width = game.config().get(ApplicationConfiguration.Attribute.WIDTH);
+        config.height = game.config().get(ApplicationConfiguration.Attribute.HEIGHT);
         config.resizable = false;
-        new LwjglApplication(new LD36Prep(), config);
+        new LwjglApplication(game, config);
     }
 }

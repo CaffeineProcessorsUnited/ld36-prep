@@ -4,40 +4,29 @@ canvas {
 }
 
 body {
-    background-color: #222222;
+    background-color: #333333;
+    color: #FF50A2;
+    font-family: sans-serif;
 }
 
-.superdev {
-    color: rgb(37, 37, 37);
-    text-shadow: 0px 1px 1px rgba(250, 250, 250, 0.1);
-    font-size: 50pt;
-    display: block;
-    position: relative;
-    text-decoration: none;
-    background-color: rgb(83, 87, 93);
-    box-shadow: 0px 3px 0px 0px rgb(34, 34, 34),
-    0px 7px 10px 0px rgb(17, 17, 17),
-    inset 0px 1px 1px 0px rgba(250, 250, 250, .2),
-    inset 0px -12px 35px 0px rgba(0, 0, 0, .5);
-    width: 70px;
-    height: 70px;
-    border: 0;
-    border-radius: 35px;
+*[align="center"] {
     text-align: center;
-    line-height: 68px;
 }
 
-.superdev:active {
-    box-shadow: 0px 0px 0px 0px rgb(34, 34, 34),
-    0px 3px 7px 0px rgb(17, 17, 17),
-    inset 0px 1px 1px 0px rgba(250, 250, 250, .2),
-    inset 0px -10px 35px 5px rgba(0, 0, 0, .5);
-    background-color: rgb(83, 87, 93);
-    top: 3px;
-    color: #fff;
-    text-shadow: 0px 0px 3px rgb(250, 250, 250);
+h1 {
+    margin-bottom: 0px;
 }
 
-.superdev:hover {
-    background-color: rgb(100, 100, 100);
+.small, .small:link, .small:visited {
+    font-size: 12px;
+    color: #AAAAAA;
+    text-decoration: none;
+}
+
+.small:active, .small:hover {
+    color: #FF50A2;
+}
+
+#embed-html > * {
+    border: 1px solid #FF50A2;
 }

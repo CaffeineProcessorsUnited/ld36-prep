@@ -3,8 +3,6 @@ package de.caffeineaddicted.ld36prep.map;
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 
-import static sun.swing.MenuItemLayoutHelper.max;
-
 /**
  * Created by Niels on 21.08.2016.
  */
@@ -23,7 +21,8 @@ abstract public class WaveGenerator {
         this.map = map;
         this.screen = screen;
         minSpawn = maxSpawn = 0;
-        tickWaitTimer = currentWaitTimer = -1;
+        tickWaitTimer = -1;
+        currentWaitTimer = 0;
         this.state = State.NEXTWAVE;
         waveCount = 0;
     }
@@ -62,7 +61,7 @@ abstract public class WaveGenerator {
     }
 
     public int getMaxSpawn() {
-        return max(minSpawn, maxSpawn);
+        return Math.max(minSpawn, maxSpawn);
     }
 
     public void setMaxSpawn(int maxSpawn) {

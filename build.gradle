@@ -16,7 +16,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        sglVersion = '0.1.0'
+        sglVersion = '0.1.2'
         appName = "LudumDare 36 Preparation"
         gdxVersion = '1.9.3'
         roboVMVersion = '2.1.0'
@@ -52,6 +52,8 @@ project(":html") {
 
     dependencies {
         compile project(":core")
+        compile "de.caffeineaddicted:superior-game-library:$sglVersion:sources"
+        compile "de.caffeineaddicted:superior-game-library:$sglVersion"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"

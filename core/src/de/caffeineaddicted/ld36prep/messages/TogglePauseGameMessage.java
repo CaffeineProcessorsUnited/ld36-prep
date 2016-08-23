@@ -5,5 +5,5 @@ import de.caffeineaddicted.sgl.messages.Message;
 /**
  * @author Malte Heinzelmann
  */
-public class TogglePauseGameMessage implements Message {
+public class TogglePauseGameMessage extends Message {
 }

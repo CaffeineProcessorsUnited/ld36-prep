@@ -19,6 +19,8 @@ import de.caffeineaddicted.ld36prep.units.UnitBase;
 import de.caffeineaddicted.ld36prep.units.UnitEnemy;
 import de.caffeineaddicted.ld36prep.units.UnitTower;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
+import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
+import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
 import de.caffeineaddicted.sgl.ui.screens.SGLScreen;
 
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
 
     public void create() {
         game.debug("Creating InGameScreen");
-        game.getScreenInput().addProcessor(this, new InGameInputProcessor(this));
+        game.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new InGameInputProcessor(this));
         map = new Map(this, 40, 20, game.getCamera().viewportWidth, game.getCamera().viewportHeight);
 
         UnitEnemy unit1 = new UnitEnemy(this, UnitEnemy.Type.FEGGIT1);
@@ -88,7 +90,6 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
                         alive++;
                 }
             }
-            //game.warning("" + alive);
             if (alive == 0) {
                 waveGenerator.skipToNextWave();
             }
@@ -125,9 +126,9 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
         }
 
         font.draw(game.getBatch(), "Money: " + money, 10, game.getCamera().viewportHeight - 10);
-        font.draw(game.getBatch(), "Score:" + score, 10, game.getCamera().viewportHeight - font.getCapHeight() - 20);
-        font.draw(game.getBatch(), "Current wave:" + waveGenerator.getWaveCount(), 10, game.getCamera().viewportHeight - 2 * font.getCapHeight() - 30);
-        font.draw(game.getBatch(), "Time to next wave:" + (int) waveGenerator.getRemainingTime(), 10, game.getCamera().viewportHeight - 3 * font.getCapHeight() - 40);
+        font.draw(game.getBatch(), "Score: " + score, 10, game.getCamera().viewportHeight - font.getCapHeight() - 20);
+        font.draw(game.getBatch(), "Current wave: " + waveGenerator.getWaveCount(), 10, game.getCamera().viewportHeight - 2 * font.getCapHeight() - 30);
+        font.draw(game.getBatch(), "Time to next wave: " + (int) waveGenerator.getRemainingTime(), 10, game.getCamera().viewportHeight - 3 * font.getCapHeight() - 40);
 
         game.getBatch().end();
 
@@ -158,11 +159,14 @@ public class InGameScreen extends SGLScreen<LD36Prep> {
     }
 
     public void touchUp(int screenX, int screenY, int pointer, int button) {
-        if (button == 1) {
-            placeTower(screenX, screenY);
-            showPlacementHUD = false;
-        } else {
-            upgradeTower(screenX, screenY);
+        switch (button) {
+            case Input.Buttons.LEFT:
+                upgradeTower(screenX, screenY);
+                break;
+            case Input.Buttons.RIGHT:
+                placeTower(screenX, screenY);
+                showPlacementHUD = false;
+                break;
         }
     }
 
