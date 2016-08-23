@@ -1,6 +1,7 @@
 package de.caffeineaddicted.ld36prep.units;
 
 import de.caffeineaddicted.ld36prep.screens.InGameScreen;
+import de.caffeineaddicted.ld36prep.units.strategy.*;
 import de.caffeineaddicted.ld36prep.util.MathUtils;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class UnitTower extends UnitBase {
         this.type = type;
         this.level = 0;
         this.lastShot = def().reload;
-        this.targetStrategy = new MostBottomTargetStrategy();
+        this.targetStrategy = def().strategy;
         update();
     }
 
@@ -62,11 +63,11 @@ public class UnitTower extends UnitBase {
     }
 
     public static enum Type {
-        FEGGIT1(new Definition(10, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower2.png")),
-        FEGGIT2(new Definition(4, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower3.png")),
-        FEGGIT3(new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower1.png"),
-                new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower2.png"),
-                new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower3.png"));
+        FEGGIT1(new Definition(10, Projectile.Type.FEGGIT1, 1, 100, 32, 32, "tower2.png", new MostBottomTargetStrategy())),
+        FEGGIT2(new Definition(4, Projectile.Type.FEGGIT2, 2, 500, 32, 32, "tower3.png", new MostHpTargetStrategy())),
+        FEGGIT3(new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower1.png", new RandomTargetStrategy()),
+                new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower2.png", new NearestTargetStrategy()),
+                new Definition(60, Projectile.Type.FEGGIT3, 0.5f, 200, 32, 32, "tower3.png", new MostBottomTargetStrategy()));
 
         private ArrayList<Definition> levels = new ArrayList<Definition>();
 
@@ -93,8 +94,9 @@ public class UnitTower extends UnitBase {
         public final int w;
         public final int h;
         public final String file;
+        public final TargetSelectionStrategy strategy;
 
-        Definition(float range, Projectile.Type projectile, float reload, float price, int w, int h, String file) {
+        Definition(float range, Projectile.Type projectile, float reload, float price, int w, int h, String file, TargetSelectionStrategy strategy) {
             this.range = range;
             this.projectile = projectile;
             this.reload = reload;
@@ -102,6 +104,7 @@ public class UnitTower extends UnitBase {
             this.w = w;
             this.h = h;
             this.file = file;
+            this.strategy = strategy;
         }
     }
 }

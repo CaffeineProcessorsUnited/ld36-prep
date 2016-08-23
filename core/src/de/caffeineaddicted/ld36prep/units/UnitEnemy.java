@@ -62,6 +62,10 @@ public class UnitEnemy extends UnitBase {
         this.hp = hp;
     }
 
+    public float getHP() {
+        return hp;
+    }
+
     protected boolean moveDirection(DIRECTION dir, float delta) {
         float x = getX();
         float y = getY();

@@ -1,4 +1,8 @@
-package de.caffeineaddicted.ld36prep.units;
+package de.caffeineaddicted.ld36prep.units.strategy;
+
+import de.caffeineaddicted.ld36prep.units.UnitBase;
+import de.caffeineaddicted.ld36prep.units.UnitEnemy;
+import de.caffeineaddicted.ld36prep.units.UnitTower;
 
 import java.util.ArrayList;
 import java.util.Random;
